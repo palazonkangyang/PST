@@ -1,0 +1,15 @@
+.dataTables_filter{
+  display: none;
+}
+
+#members_table{
+  width: 1320px!important;
+}
+
+.form-group{
+  overflow: hidden;
+}
+
+.info-detail p{
+  margin: 0 0 10px !important;
+}
