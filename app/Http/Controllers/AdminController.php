@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Staff;
 use App\Models\User;
+use App\Models\Shengzhupaislots;
 use Auth;
 use DB;
 use Hash;
@@ -30,8 +31,121 @@ class AdminController extends Controller
     public function dashboard()
     {
 
-      
+
         return view('admin/dashboard');
+    }
+
+
+
+    public function getAjaxShengzhupaiSlots(Request $request)
+    {
+        $slot_id = $_GET['slot_id'];
+          $Shengzhupaislots = Shengzhupaislots::where('id', '=',  $slot_id)
+                ->first();
+
+        return response()->json(array(
+            'shengzhupaislots' => $Shengzhupaislots
+        ));
+    }
+
+		// Get Setting Ling Wei
+		public function getSettingLingwei()
+		{
+
+		}
+
+		// Get All Ling Wei
+		public function getAllLingwei()
+		{
+
+		}
+
+		// Get Setting Shengzhupai
+		public function getSettingShengzhupai()
+		{
+
+		}
+
+		// Get AllShengzhupai
+		public function getAllShengzhupai()
+		{
+
+		}
+
+		// Get SettingOtherOption
+		public function getSettingOtherOption()
+		{
+
+		}
+
+		// Get AllOtheroption
+		public function getAllOtheroption()
+		{
+
+		}
+
+		// Get ChangeZuolingStatus
+		public function getChangeZuolingStatus()
+		{
+
+		}
+
+
+		// Get Report
+		public function getReport()
+		{
+
+		}
+
+
+
+		// Get PricesettingLingwei
+		public function getPricesettingLingwei()
+		{
+
+		}
+
+		// Get SettingGst
+		public function getSettingGst()
+		{
+
+		}
+
+		// Get PricesettingShengzhupai
+		public function getPricesettingShengzhupai()
+		{
+
+		}
+
+		// Get PricesettingBei
+		public function getPricesettingBei()
+		{
+
+		}
+
+		// Get OneTimePricesettingShengzhupai
+		public function getOneTimePricesettingShengzhupai()
+		{
+
+		}
+
+		// Get OneTimePricesettingLingwei
+		public function getOneTimePricesettingLingwei()
+		{
+
+		}
+
+    // Get All Sheng Zhu Pai Slots
+    public function getAllShengzhuPaiSlots()
+    {
+        $Shengzhupaislots = Shengzhupaislots::where('status', '=', 'available')
+                ->get();
+
+
+
+        return view('admin.all-shengzhupaislots', [
+            'shengzhupaislots' => $Shengzhupaislots
+        ]);
     }
 
 	// Get All Accounts

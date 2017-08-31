@@ -226,7 +226,8 @@ class OperatorController extends Controller
 				else {
 					$dobNewDate = $input['dob'];
 				}
-
+if(isset($input['approved_date']))
+				{
 				if(isset($input['approved_date']))
 				{
 					$approvedDate_date = str_replace('/', '-', $input['approved_date']);
@@ -249,7 +250,7 @@ class OperatorController extends Controller
 			    $member = Member::create($data);
 			    $member_id = $member['member_id'];
 		    }
-
+}
 		   if($member_id != null && isset($input['familycode_id']))
 		   {
 		   		$data = [
@@ -264,7 +265,6 @@ class OperatorController extends Controller
 				    "address_street" => $input['address_street'],
 				    "address_building" => $input['address_building'],
 				    "address_postal" => $input['address_postal'],
-				    "address_translated" => $input['address_translated'],
 				    "oversea_addr_in_chinese" => $input['oversea_addr_in_chinese'],
 				    "nric" => $input['nric'],
 				    "deceased_year" => $input['deceased_year'],
@@ -305,7 +305,6 @@ class OperatorController extends Controller
 				        "address_street" => $input['address_street'],
 				        "address_building" => $input['address_building'],
 				        "address_postal" => $input['address_postal'],
-				        "address_translated" => $input['address_translated'],
 				        "oversea_addr_in_chinese" => $input['oversea_addr_in_chinese'],
 				        "nric" => $input['nric'],
 				        "deceased_year" => $input['deceased_year'],
@@ -336,7 +335,6 @@ class OperatorController extends Controller
 				        "address_street" => $input['address_street'],
 				        "address_building" => $input['address_building'],
 				        "address_postal" => $input['address_postal'],
-				        "address_translated" => $input['address_translated'],
 				        "oversea_addr_in_chinese" => $input['oversea_addr_in_chinese'],
 				        "nric" => $input['nric'],
 				        "deceased_year" => $input['deceased_year'],
@@ -376,7 +374,6 @@ class OperatorController extends Controller
 				        "address_street" => $input['address_street'],
 				        "address_building" => $input['address_building'],
 				        "address_postal" => $input['address_postal'],
-				        "address_translated" => $input['address_translated'],
 				        "oversea_addr_in_chinese" => $input['oversea_addr_in_chinese'],
 				        "nric" => $input['nric'],
 				        "deceased_year" => $input['deceased_year'],
@@ -541,7 +538,6 @@ class OperatorController extends Controller
 				$devotee->address_street = $input['address_street'];
 				$devotee->address_building = $input['address_building'];
 				$devotee->address_postal = $input['address_postal'];
-				$devotee->address_translated = $input['address_translated'];
 				$devotee->oversea_addr_in_chinese = $input['oversea_addr_in_chinese'];
 				$devotee->nric = $input['nric'];
 				$devotee->deceased_year = $input['deceased_year'];
@@ -754,6 +750,22 @@ class OperatorController extends Controller
 									'generaldonation.hjgr as generaldonation_hjgr')
 				         	->get();
 
+
+
+
+		// Get Receipt History
+		$shengzhupai_receipts = Receipt::leftjoin('shengzhupai', 'shengzhupai.id', '=', 'receipt.module_id')
+								->leftjoin('devotee', 'devotee.devotee_id', '=', 'shengzhupai.focusdevotee_id')
+								->leftjoin('shengzhupaislots', 'shengzhupaislots.id', '=', 'shengzhupai.slot_id')
+								->where('shengzhupai.focusdevotee_id', $focus_devotee[0]->devotee_id)
+								->where('receipt.module', 'shengzhupai')
+								->orderBy('receipt_id', 'desc')
+								->select('receipt.*','shengzhupaislots.*', 'devotee.chinese_name', 'devotee.devotee_id')
+								->get();
+	
+
+				         	
+
 		$optionaladdresses = OptionalAddress::where('devotee_id', $focus_devotee[0]->devotee_id)->get();
 		$optionalvehicles = OptionalVehicle::where('devotee_id', $focus_devotee[0]->devotee_id)->get();
 		$specialRemarks = SpecialRemarks::where('devotee_id', $focus_devotee[0]->devotee_id)->get();
@@ -793,6 +805,14 @@ class OperatorController extends Controller
 		{
 			Session::put('receipts', $receipts);
 		}
+
+
+		 	
+  		  if(!Session::has('shengzhupai_receipts'))
+   		 {
+   		   Session::put('shengzhupai_receipts', $shengzhupai_receipts);
+   		 }
+
 
 		if(count($focus_devotee) > 1)
 		{
@@ -840,6 +860,7 @@ class OperatorController extends Controller
 		Session::forget('devotee_lists');
 		Session::forget('relative_friend_lists');
 		Session::forget('receipts');
+		Session::forget('shengzhupai_receipts');
 		Session::forget('optionaladdresses');
 		Session::forget('optionalvehicles');
 		Session::forget('specialRemarks');

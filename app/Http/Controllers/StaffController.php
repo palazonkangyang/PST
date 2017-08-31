@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Models\Member;
 use App\Models\Devotee;
 use App\Models\User;
+use App\Models\Wanyuanshenghui;
 use App\Models\OptionalAddress;
 use App\Models\OptionalVehicle;
 use App\Models\FamilyCode;
@@ -16,6 +17,7 @@ use App\Models\Receipt;
 use App\Models\FestiveEvent;
 use App\Models\RelativeFriendLists;
 use App\Models\Job;
+use App\Models\Shengzhupai;
 use Auth;
 use DB;
 use Hash;
@@ -28,6 +30,106 @@ use Carbon\Carbon;
 
 class StaffController extends Controller
 {
+
+	// getAllWanyuanshenghui
+	public function postVerticalprintWanyuanshenghui(Request $request)
+	{
+		$input = array_except($request->all(), '_token');
+		$validator = $this->validate($request, [
+		'wanyuanshenghuis' => 'required'
+	]);
+
+	if ($validator && $validator->fails()) {
+		return redirect()->back()
+					->withErrors($validator)
+					->withInput();
+	}
+		//get array which the data need for print type, block no and name
+		$wanyuanshenghuis = Wanyuanshenghui::orderBy('type', 'asc')
+												->orderBy('block_no','asc')
+												->whereIn('id', $input['wanyuanshenghuis'])
+												->get();
+
+		//chinese name handling for spacing and second/third line
+
+		for($i = 0; $i < count($wanyuanshenghuis); $i++)
+		{
+
+$lines = preg_split('/\n|\r\n?/', $wanyuanshenghuis[$i]['word_print']);
+$wanyuanshenghuis[$i]['lines'] = $lines;
+
+	}
+	//use the first type to determine which format of blade needed to be use and redirect to
+	if($wanyuanshenghuis[0]['type'] == '0')
+	{
+		return view('staff.wanyuanshenghuiprint', [
+      'wanyuanshenghuis' => $wanyuanshenghuis
+    ]);
+	}elseif($wanyuanshenghuis[0]['type'] == '1')
+{
+	return view('staff.wanyuanshenghuiprint2', [
+		'wanyuanshenghuis' => $wanyuanshenghuis
+	]);
+}elseif($wanyuanshenghuis[0]['type'] == '2')
+{
+	return view('staff.wanyuanshenghuiprint3', [
+		'wanyuanshenghuis' => $wanyuanshenghuis
+	]);
+}elseif($wanyuanshenghuis[0]['type'] == '3')
+{
+	return view('staff.wanyuanshenghuiprint4', [
+		'wanyuanshenghuis' => $wanyuanshenghuis
+	]);
+	}
+
+
+	}
+
+	// Edit Wanyuanshenghui
+	public function getEditWanyuanshenghui($id)
+	{
+				$wanyuanshenghui = Wanyuanshenghui::find($id);
+
+				if (!$wanyuanshenghui) {
+						return view('errors.503');
+				}
+
+		return view('staff.edit-wanyuanshenghui', [
+						'wanyuanshenghui' => $wanyuanshenghui
+				]);
+	}
+
+	public function changeWanyuanshenghui(Request $request)
+	{
+		$input = Input::except('_token');
+		$wanyuanshenghui = Wanyuanshenghui::find($input['id']);
+
+		$wanyuanshenghui->word_print = $input['word_print'];
+		$wanyuanshenghui->save();
+
+
+				$request->session()->flash('success', 'wanyuanshenghui has been updated!');
+
+				return view('staff.edit-wanyuanshenghui', [
+								'wanyuanshenghui' => $wanyuanshenghui
+						]);
+	}
+
+
+
+	public function getAllWanyuanshenghui()
+	{
+		$wanyuanshenghuis = Wanyuanshenghui::orderBy('type', 'asc')
+												->orderBy('block_no','asc')
+												->get();
+
+
+		return view('staff.all-wanyuanshenghui', [
+      'wanyuanshenghuis' => $wanyuanshenghuis
+    ]);
+	}
+
+
 
 	public function getDonation()
 	{
@@ -42,6 +144,109 @@ class StaffController extends Controller
 			'events' => $events
 		]);
 	}
+
+
+
+	public function getShengzhupai()
+	{
+		$today = Carbon::today();
+
+		$events = FestiveEvent::orderBy('start_at', 'asc')
+							->where('start_at', '>', $today)
+							->take(2)
+							->get();
+
+		return view('staff.shengzhupai', [
+			'events' => $events
+		]);
+	}
+
+
+
+
+	public function getLingwei()
+	{
+		$today = Carbon::today();
+
+		$events = FestiveEvent::orderBy('start_at', 'asc')
+							->where('start_at', '>', $today)
+							->take(2)
+							->get();
+
+		return view('staff.lingwei', [
+			'events' => $events
+		]);
+	}
+
+
+	public function getBei()
+	{
+		$today = Carbon::today();
+
+		$events = FestiveEvent::orderBy('start_at', 'asc')
+							->where('start_at', '>', $today)
+							->take(2)
+							->get();
+
+		return view('staff.bei', [
+			'events' => $events
+		]);
+	}
+
+
+public function getRmkbei()
+	{
+		$today = Carbon::today();
+
+		$events = FestiveEvent::orderBy('start_at', 'asc')
+							->where('start_at', '>', $today)
+							->take(2)
+							->get();
+
+		return view('staff.rmkbei', [
+			'events' => $events
+		]);
+	}
+
+	public function getWanyuanshenghui()
+	{
+		$today = Carbon::today();
+
+		$events = FestiveEvent::orderBy('start_at', 'asc')
+							->where('start_at', '>', $today)
+							->take(2)
+							->get();
+
+		return view('staff.wanyuanshenghui', [
+			'events' => $events
+		]);
+	}
+
+		public function getWanyuanshenghuiprint()
+	{
+
+		return view('staff.wanyuanshenghuiprint');
+	}
+
+		public function getWanyuanshenghuiprint2()
+	{
+
+		return view('staff.wanyuanshenghuiprint2');
+	}
+
+	public function getWanyuanshenghuiprint3()
+	{
+
+		return view('staff.wanyuanshenghuiprint3');
+	}
+
+	public function getWanyuanshenghuiprint4()
+	{
+
+		return view('staff.wanyuanshenghuiprint4');
+	}
+
+
 
 	public function postDonation(Request $request)
 	{
@@ -91,8 +296,7 @@ class StaffController extends Controller
 		  "receipt_at" =>	$receipt_at,
 		  "manualreceipt" => $input['manualreceipt'],
 		  "trans_at" => Carbon::now(),
-		  "focusdevotee_id" => $input['focusdevotee_id'],
-		  "festiveevent_id" => $input['festiveevent_id']
+		  "focusdevotee_id" => $input['focusdevotee_id']
 		];
 
 		$general_donation = GeneralDonation::create($data);
@@ -302,6 +506,13 @@ class StaffController extends Controller
 		  Session::forget('receipts');
 		}
 
+
+
+		// remove session
+		if(Session::has('shengzhupai_receipts'))
+		{
+		  Session::forget('shengzhupai_receipts');
+		}
 		// Get Relative and friends lists
 		$relative_friend_lists = RelativeFriendLists::leftjoin('devotee', 'devotee.devotee_id', '=', 'relative_friend_lists.relative_friend_devotee_id')
 															->where('donate_devotee_id', $input['focusdevotee_id'])
@@ -333,6 +544,119 @@ class StaffController extends Controller
 		$request->session()->flash('success', 'General Donation is successfully created.');
 		return redirect()->back();
 	}
+
+	// Post Sheng Zhu Pai
+	public function postShengzhupai(Request $request)
+	{
+		$input = array_except($request->all(), '_token');
+
+
+		$data = [
+		  "name" =>$input['name'],
+		  "type" => $input['type'],
+		  "entermastertype" => $input['entermastertype'],
+		  "done" => $input['done'],
+		"total"  => $input['total_amount'],
+        "association_dd" => $input['association_dd'],
+        "total_gst" => $input['total_gst'],
+        "total_aftergst" => $input['total_aftergst'],
+        "total_afterdiscount" => $input['total_afterdiscount'],
+		  "focusdevotee_id" => $input['focusdevotee_id'],
+		  "slot_id" => $input['slot_id']
+		];
+
+		$shengzhupai = Shengzhupai::create($data);
+
+		  $data_receipts = [
+						    "xy_receipt" => 'S'.$shengzhupai->id,
+						    "trans_date" => Carbon::now(),
+						    "description" => "Shengzhupai:".$input['ss_blk']."-".$input['ss_level']."-".$input['ss_number'],
+						    "amount" => $input['total_amount'],
+						       "module" => "shengzhupai",
+						    "module_id" => $shengzhupai->id
+						  ];
+
+						  $shengzhupaireceipt= Receipt::create($data_receipts);
+
+	// Get Receipt History
+		$shengzhupai_receipts = Receipt::leftjoin('shengzhupai', 'shengzhupai.id', '=', 'receipt.module_id')
+								->leftjoin('devotee', 'devotee.devotee_id', '=', 'shengzhupai.focusdevotee_id')
+								->leftjoin('shengzhupaislots', 'shengzhupaislots.id', '=', 'shengzhupai.slot_id')
+								->where('shengzhupai.focusdevotee_id', $input['focusdevotee_id'])
+								->where('receipt.module', 'shengzhupai')
+								->orderBy('receipt_id', 'desc')
+								->select('receipt.*','shengzhupaislots.*', 'devotee.chinese_name', 'devotee.devotee_id')
+								->get();
+
+
+		 	// store session
+    if(!Session::has('shengzhupai_receipts'))
+    {
+      Session::put('shengzhupai_receipts', $shengzhupai_receipts);
+    }
+
+
+		$request->session()->flash('success', '神主牌 is successfully created.');
+		return redirect()->back();
+
+
+    }
+
+
+    // Post Ling Wei
+	public function postLingwei(Request $request)
+	{
+		$input = array_except($request->all(), '_token');
+
+		dd($input);
+    }
+
+      // Post Bei
+	public function postBei(Request $request)
+	{
+		$input = array_except($request->all(), '_token');
+
+		dd($input);
+    }
+
+     // Post Rmkbei
+	public function postRmkbei(Request $request)
+	{
+		$input = array_except($request->all(), '_token');
+
+		dd($input);
+    }
+
+       // Post Wanyuanshenghui
+	public function postWanyuanshenghui(Request $request)
+	{
+		$input = array_except($request->all(), '_token');
+		$data = [
+			"year_report" =>$input['year_report'],
+		 "type" => $input['type'],
+		 "is_preancestor" => $input['is_preancestor'],
+		 "temp_receiptno" => $input['temp_receiptno'],
+		 "word_print"  => $input['word_print'],
+				"recommend_ppl" => $input['recommend_ppl'],
+				"last_print_at" => Carbon::now(),
+				"print_by" => "test",
+
+		 "devotee_id" => $input['focusdevotee_id'],
+		"total"  => $input['total_amount'],
+        "association_dd" => $input['association_dd']
+
+		];
+
+		$wanyuanshenghui = Wanyuanshenghui::create($data);
+
+		//receipt creation and receipt handling pending yet
+
+		$request->session()->flash('success', '万缘胜会 is successfully created.');
+		return redirect()->back();
+
+    }
+
+
 
 	// Receipt Cancellation
 	public function postReceiptCancellation(Request $request)
@@ -382,7 +706,7 @@ class StaffController extends Controller
 	{
 		$receipt = Receipt::join('generaldonation', 'generaldonation.generaldonation_id', '=', 'receipt.generaldonation_id')
 					->join('devotee', 'devotee.devotee_id', '=', 'generaldonation.focusdevotee_id')
-					->select('receipt.*', 'devotee.chinese_name', 'devotee.devotee_id', 'generaldonation.trans_no')
+					->select('receipt.*', 'devotee.*', 'devotee.devotee_id', 'generaldonation.trans_no')
 					->where('receipt.receipt_id', $receipt_id)
 					->get();
 

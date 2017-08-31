@@ -46,6 +46,6 @@
 
     </div><!-- end content -->
 
-    <div class="copyright"> <?php echo date('Y'); ?> © LI TECK CHUAN CIN TONG. ALL RIGHTS RESERVED </div>
+    <div class="copyright"> <?php echo date('Y'); ?> © 廣惠肇碧山亭 Kwong Wai Siew Peck San Theng. ALL RIGHTS RESERVED </div>
 
 @stop

@@ -92,6 +92,45 @@
                                         </a>
                                     </li>
 
+
+                                     <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown">
+                                        <a href="/staff/shengzhupai" class="nav-link  ">  神主牌
+                                            <span class="arrow"></span>
+                                        </a>
+                                    </li>
+
+                                     <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown">
+                                        <a href="/staff/lingwei" class="nav-link  "> 灵塔
+                                            <span class="arrow"></span>
+                                        </a>
+                                    </li>
+
+                                     <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown">
+                                        <a href="/staff/bei" class="nav-link  "> 埕/碑
+                                            <span class="arrow"></span>
+                                        </a>
+                                    </li>
+
+                                         <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown">
+                                        <a href="/staff/rmkbei" class="nav-link  "> 重做碑
+                                            <span class="arrow"></span>
+                                        </a>
+                                    </li>
+
+
+                                    <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                                          <a href="/staff/wanyuanshenghui"> 万缘胜会
+                                              <span class="arrow"></span>
+                                          </a>
+                                          <ul class="dropdown-menu pull-left">
+                                              <li aria-haspopup="true" class=" ">
+                                                  <a href="/staff/all-wanyuanshenghui">万缘胜会列表</a>
+                                              </li>
+                                              <li aria-haspopup="true" class=" ">
+                                                  <a href="/staff/wanyuanshenghui">新增万缘胜会</a>
+                                              </li>
+                                          </ul>
+                                      </li>
                                     <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown">
                                         <a href="/staff/donation" class="nav-link  "> General Donation 乐捐
                                             <span class="arrow"></span>
@@ -105,7 +144,7 @@
                                     </li>
 
                                     <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown">
-                                            <a href="javascript:;"> Fund Account
+                                            <a href="javascript:;"> Fund Account 财务
                                                 <span class="arrow"></span>
                                             </a>
                                             <ul class="dropdown-menu" style="min-width: 710px">

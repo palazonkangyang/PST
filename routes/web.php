@@ -33,10 +33,31 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/dashboard', ['as' => 'dashboard-page', 'uses' => 'AdminController@dashboard']);
     Route::get('/add-account', ['as' => 'add-account-page', 'uses' => 'AdminController@getAddAccount']);
 		Route::get('/all-accounts', ['as' => 'all-accounts-page', 'uses' => 'AdminController@getAllAccounts']);
+		Route::get('/all-shengzhupaislots', ['as' => 'all-shengzhupaislots-page', 'uses' => 'AdminController@getAllShengzhupaiSlots']);
 		Route::get('/account/edit/{id}', ['as' => 'all-account-page', 'uses' => 'AdminController@getEditAccount']);
 		Route::get('/account/delete/{id}', ['as' => 'all-account-page', 'uses' => 'AdminController@deleteAccount']);
+		Route::get('/ajax-shengzhupaislots', ['as' => 'ajax-shengzhupaislots-page', 'uses' => 'AdminController@getAjaxShengzhupaiSlots']);
 		Route::post('/add-account', ['as' => 'add-account-page', 'uses' => 'AdminController@postAddAccount']);
 		Route::post('/change-account', ['as' => 'change-account-page', 'uses' => 'AdminController@changeAccount']);
+
+		//pst
+		Route::get('/setting-lingwei', ['as' => 'setting-lingwei-page', 'uses' => 'AdminController@getSettingLingwei']);
+		Route::get('/all-lingwei', ['as' => 'all-lingwei-page', 'uses' => 'AdminController@getAllLingwei']);
+		Route::get('/setting-shengzhupai', ['as' => 'setting-shengzhupai-page', 'uses' => 'AdminController@getSettingShengzhupai']);
+		Route::get('/all-shengzhupai', ['as' => 'all-shengzhupai-page', 'uses' => 'AdminController@getAllShengzhupai']);
+		Route::get('/setting-otheroption', ['as' => 'setting-otheroption-page', 'uses' => 'AdminController@getSettingOtherOption']);
+		Route::get('/all-otheroption', ['as' => 'all-otheroption-page', 'uses' => 'AdminController@getAllOtheroption']);
+		Route::get('/change-zuoling-status', ['as' => 'change-zuoling-status-page', 'uses' => 'AdminController@getChangeZuolingStatus']);
+		Route::get('/all-zuoling', ['as' => 'all-zuoling-page', 'uses' => 'AdminController@getSettingLingwei']);
+		Route::get('/report', ['as' => 'report-page', 'uses' => 'AdminController@getReport']);
+		Route::get('/pricesetting-lingwei', ['as' => 'pricesetting-lingwei-page', 'uses' => 'AdminController@getPricesettingLingwei']);
+		Route::get('/setting-gst', ['as' => 'setting-gst-page', 'uses' => 'AdminController@getSettingGst']);
+		Route::get('/pricesetting-shengzhupai', ['as' => 'pricesetting-shengzhupai-page', 'uses' => 'AdminController@getPricesettingShengzhupai']);
+		Route::get('/pricesetting-bei', ['as' => 'pricesetting-bei-page', 'uses' => 'AdminController@getPricesettingBei']);
+		Route::get('/pricesetting-option', ['as' => 'pricesetting-option-page', 'uses' => 'AdminController@getPricesettingOption']);
+		Route::get('/onetime-pricesetting-lingwei', ['as' => 'onetime-pricesetting-lingwei-page', 'uses' => 'AdminController@getOneTimePricesettingLingwei']);
+		Route::get('/onetime-pricesetting-shengzhupai', ['as' => 'onetime-pricesetting-shengzhupai-page', 'uses' => 'AdminController@getOneTimePricesettingShengzhupai']);
+
   });
 
   Route::group(['prefix' => 'operator'], function () {
@@ -54,7 +75,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/getFocusDevoteeDetail', ['as' => 'get-focus-devotee-detail-page', 'uses' => 'OperatorController@getFocusDevoteeDetail']);
 		Route::get('/devotee/focus-devotee', ['as' => 'get-json-focus-devotee-page', 'uses' => 'OperatorController@getJSONFocusDevotee']);
 		Route::get('/devotee/delete/{devotee_id}', ['as' => 'delete-devotee-page', 'uses' => 'OperatorController@deleteDevotee']);
-
 		Route::match(["post", "get"], '/focus-devotee', ['as' => 'focus-devotee-page', 'uses' => 'OperatorController@getFocusDevotee']);
 		Route::post('/relocation', ['as' => 'relocation-devotee-page', 'uses' => 'OperatorController@postRelocationDevotees']);
 		Route::post('/new-devotee', ['as' => 'new-devotee-page', 'uses' => 'OperatorController@postAddDevotee']);
@@ -62,15 +82,33 @@ Route::group(['middleware' => 'auth'], function () {
   });
 
   Route::group(['prefix' => 'staff'], function () {
+		Route::get('/wanyuanshenghui/edit/{id}', ['as' => 'edit-wanyuanshenghui-page', 'uses' => 'StaffController@getEditWanyuanshenghui']);
+			Route::post('/change-wanyuanshenghui', ['as' => 'change-wanyuanshenghui-page', 'uses' => 'StaffController@changeWanyuanshenghui']);
+
     Route::get('/search-devotee', ['as' => 'search-devotee-page', 'uses' => 'StaffController@getSearchDevotee']);
     Route::get('/donation', ['as' => 'get-donation-page', 'uses' => 'StaffController@getDonation']);
+    Route::get('/shengzhupai', ['as' => 'get-shengzhupai-page', 'uses' => 'StaffController@getShengzhupai']);
+    Route::get('/lingwei', ['as' => 'get-lingwei-page', 'uses' => 'StaffController@getLingwei']);
+    Route::get('/bei', ['as' => 'get-bei-page', 'uses' => 'StaffController@getBei']);
+     Route::get('/rmkbei', ['as' => 'get-rmkbei-page', 'uses' => 'StaffController@getRmkbei']);
+    Route::get('/wanyuanshenghui', ['as' => 'get-wanyuanshenghui-page', 'uses' => 'StaffController@getWanyuanshenghui']);
+		Route::get('/all-wanyuanshenghui', ['as' => 'get-all-wanyuanshenghui-page', 'uses' => 'StaffController@getAllWanyuanshenghui']);
+			Route::get('/wanyuanshenghuiprint', ['as' => 'get-wanyuanshenghuiprint-page', 'uses' => 'StaffController@getWanyuanshenghuiprint']);
+      Route::get('/wanyuanshenghuiprint2', ['as' => 'get-wanyuanshenghuiprint2-page', 'uses' => 'StaffController@getWanyuanshenghuiprint2']);
+        Route::get('/wanyuanshenghuiprint3', ['as' => 'get-wanyuanshenghuiprint3-page', 'uses' => 'StaffController@getWanyuanshenghuiprint3']);
+          Route::get('/wanyuanshenghuiprint4', ['as' => 'get-wanyuanshenghuiprint4-page', 'uses' => 'StaffController@getWanyuanshenghuiprint4']);
     Route::get('/receipt/{receipt_id}', ['as' => 'receipt-page', 'uses' => 'StaffController@getReceipt']);
 		Route::get('/receiptdetail/{receipt_id}', ['as' => 'receipt-page', 'uses' => 'StaffController@getReceiptDetail']);
     Route::get('/transaction/{generaldonation_id}', ['as' => 'receipt-page', 'uses' => 'StaffController@getTransaction']);
 		Route::get('/create-festive-event', ['as' => 'create-festive-event-page', 'uses' => 'StaffController@getCreateFestiveEvent']);
-
+		Route::post('/verticalprint-wanyuanshenghui', ['as' => 'post-verticalprint-wanyuanshenghui-page', 'uses' => 'StaffController@postVerticalprintWanyuanshenghui']);
 		Route::post('/create-festive-event', ['as' => 'add-new-festive-event-page', 'uses' => 'StaffController@postCreateFestiveEvent']);
     Route::post('/donation', ['as' => 'post-donation-page', 'uses' => 'StaffController@postDonation']);
+     Route::post('/shengzhupai', ['as' => 'post-shengzhupai-page', 'uses' => 'StaffController@postShengzhupai']);
+      Route::post('/lingwei', ['as' => 'post-lingwei-page', 'uses' => 'StaffController@postLingwei']);
+       Route::post('/bei', ['as' => 'post-bei-page', 'uses' => 'StaffController@postBei']);
+        Route::post('/rmkbei', ['as' => 'post-rmkbei-page', 'uses' => 'StaffController@postRmkbei']);
+          Route::post('/wanyuanshenghui', ['as' => 'post-wanyuanshenghui-page', 'uses' => 'StaffController@postWanyuanshenghui']);
 		Route::post('/receipt-cancellation', ['as' => 'receipt-cancellation-page', 'uses' => 'StaffController@postReceiptCancellation']);
   });
 

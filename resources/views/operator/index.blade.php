@@ -50,9 +50,7 @@
 
                                         <div class="portlet">
 
-                                            <div class="validation-error">
-                                            </div><!-- end validation-error -->
-
+                                          
                                             @if($errors->any())
 
                                                 <div class="alert alert-danger">
@@ -98,7 +96,7 @@
                                                             <a href="#tab_relocation" data-toggle="tab">Relocation  <br>全家搬迁</a>
                                                         </li>
 																												<li id="search">
-                                                            <a href="#tab_searchresult" data-toggle="tab">Search Result  <br>全家搬迁</a>
+                                                            <a href="#tab_searchresult" data-toggle="tab">Search Result  <br>shou</a>
                                                         </li>
                                                     </ul>
 
@@ -111,7 +109,7 @@
 
                                                                 <div class="form-group">
 
-                                                                    <table class="table table-striped table-bordered" id="devotees_table">
+                                                                    <table class="table table-striped table-bordered" style='overflow-x:scroll;'id="devotees_table">
 
                                                                         <thead>
                                                                             <tr id="filter">
@@ -375,15 +373,7 @@
 
                                                                     </div><!-- end form-group -->
 
-                                                                    <div class="form-group">
-
-                                                                        <label class="col-md-3 control-label">Address - Translate</label>
-                                                                        <div class="col-md-9">
-                                                                            <input type="text" class="form-control"
-                                                                                name="address_translated" id="address_translated" readonly>
-                                                                        </div><!-- end col-md-9 -->
-
-                                                                    </div><!-- end form-group -->
+                                                                   
 
                                                                     <div class="form-group">
 
@@ -404,9 +394,7 @@
 	                                                                      	Check Family Code
 	                                                                      </button>
 
-																																				<button type="button" class="btn default address_translated_btn">
-																																					Translate Address
-																																				</button>
+																																			
                                                                       </div><!-- end col-md-8 -->
 
 																																				<div class="col-md-4">
@@ -1469,6 +1457,7 @@
 					// DataTable
 					var table = $('#devotees_table').DataTable({
 						"lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]]
+                        
 					});
 
           $('#devotees_table thead tr#filter th').each( function () {

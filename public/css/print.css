@@ -3,7 +3,7 @@ body{
 }
 
 header{
-  height: 30mm;
+  height: 1mm;
 }
 
 article{
@@ -11,12 +11,12 @@ article{
 }
 
 #leftcontent{
-  width: 120mm;
+  width: 110mm;
   float: left;
 }
 
 #rightcontent{
-  width: 68mm;
+  width: 78mm;
   float: right;
 }
 

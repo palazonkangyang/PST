@@ -29,20 +29,16 @@ $(function() {
 
                     $('#appendDevoteeLists').append("<tr><td><i class='fa fa-minus-circle removeDevotee' aria-hidden='true'></i>" +
                         "<input type='hidden' name='other_devotee_id[]' value='" + response.devotee['devotee_id'] + "'></td>" +
+                        "<td>" + response.devotee['title'] +"</td>" +
                         "<td>" + response.devotee['chinese_name'] +"</td>" +
+                        "<td>" + response.devotee['english_name'] +"</td>" +
+                        "<td>" + response.devotee['nric'] +"</td>" +
+                        "<td>" + response.devotee['contact'] +"</td>" +
+                        "<td>" + response.devotee['dob'] +"</td>" +
                         "<td>" + response.devotee['devotee_id'] + "</td>" +
                         "<td>" + response.devotee['address_building'] + "</td>" +
                         "<td>" + response.devotee['address_street'] + "</td>" +
-                        "<td>" + response.devotee['address_unit1'] + "</td>" +
-                        "<td>" + response.devotee['guiyi_name'] + "</td>" +
-                        "<td class='amount-col'><input type='text' class='form-control amount' name='other_amount[]'></td>" +
-                        "<td><input type='text' class='form-control paid_till' name='other_paid_till[]' data-provide='datepicker' data-date-format='dd/mm/yyyy'></td>" +
-                        "<td><select class='form-control' name='other_hjgr_arr[]'><option value='hj'>hj</option><option value='gr'>gr</option>" +
-                        "</select></td>" +
-                        "<td><select class='form-control' name='other_display[]'><option value='Y'>Y</option><option value='N'>N</option>" +
-                        "</select></td>" +
-                        "<td></td>" +
-                        "<td></td>");
+                        "<td>" + response.devotee['address_unit1'] + "</td>");
                 }
             },
 
@@ -51,6 +47,13 @@ $(function() {
             }
         });
 	});
+
+
+    // remove row
+    $("#generaldonation_table").on('click', '.removeDevotee', function() {
+
+        $(this).closest ('tr').remove ();
+    });
 
 
     // remove row

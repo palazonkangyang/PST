@@ -16,6 +16,8 @@ class Receipt extends Model
         'cancelled_date',
         'status',
         'cancelled_by',
-        'generaldonation_id'
+        'generaldonation_id',
+          'module',
+           'module_id'
     ];
 }

@@ -1,0 +1,11 @@
+<p>&nbsp;</p>
+<div class="space_with_cnt">
+<h1>Reflective Journals</h1>
+<h3>Please select from the classes below to view the daily reflective journals.</h3>
+<p>&nbsp;</p>
+[jlink href="/nursery-a/" name="Nursery A"] [jlink href="/nursery-b/" name="Nursery B"] [jlink href="/nursery-c/" name="Nursery C"] [jlink href="/nursery-d/" name="Nursery D"] [jlink href="/nursery-e/" name="Nursery E"]  [jlink href="/nursery-f/" name="Nursery F"]  [jlink href="/preschool-a/" name="Preschool A"] [jlink href="/preschool-b/" name="Preschool B"]  [jlink href="/junior-kindergarten/" name="Junior Kindergarten"] [jlink href="/senior-kindergarten/" name="Senior Kindergarten"] [jlink href="/music/" name="Music & Dance"]  [jlink href="/art/" name="Art & Creativity"] [jlink href="/mandarin/" name="Mandarin"] [jlink href="/holiday-programme/" name="Holiday Programme"]</div>
+
+
+
+Update `wp_posts` set post_status ='archiveprivate' where post_status ='private' and post_type='post'
+Update `wp_posts` set post_status ='archive' where post_status ='public' and post_type='post'

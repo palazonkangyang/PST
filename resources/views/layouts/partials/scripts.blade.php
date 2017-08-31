@@ -16,9 +16,7 @@
         <script src="{{ asset('/js/jquery.flot.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/js/jquery.flot.resize.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/js/jquery.flot.categories.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('/js/jquery.easypiechart.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/js/jquery.sparkline.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('/js/jquery.vmap.js') }}" type="text/javascript"></script>
 
         <script src="{{ asset('/js/jstree.min.js') }}" type="text/javascript"></script>
 
