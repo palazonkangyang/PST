@@ -45,8 +45,11 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/all-lingwei', ['as' => 'all-lingwei-page', 'uses' => 'AdminController@getAllLingwei']);
 		Route::get('/setting-shengzhupai', ['as' => 'setting-shengzhupai-page', 'uses' => 'AdminController@getSettingShengzhupai']);
 		Route::get('/all-shengzhupai', ['as' => 'all-shengzhupai-page', 'uses' => 'AdminController@getAllShengzhupai']);
-		Route::get('/setting-otheroption', ['as' => 'setting-otheroption-page', 'uses' => 'AdminController@getSettingOtherOption']);
+		Route::get('/add-otheroption', ['as' => 'add-otheroption-page', 'uses' => 'AdminController@getAddOtherOption']);
 		Route::get('/all-otheroption', ['as' => 'all-otheroption-page', 'uses' => 'AdminController@getAllOtheroption']);
+		Route::get('/otheroption/edit/{id}', ['as' => 'all-otheroption-page', 'uses' => 'AdminController@getEditOtherOption']);
+		Route::get('/otheroption/delete/{id}', ['as' => 'all-otheroption-page', 'uses' => 'AdminController@deleteOtherOption']);
+
 		Route::get('/change-zuoling-status', ['as' => 'change-zuoling-status-page', 'uses' => 'AdminController@getChangeZuolingStatus']);
 		Route::get('/all-zuoling', ['as' => 'all-zuoling-page', 'uses' => 'AdminController@getSettingLingwei']);
 		Route::get('/report', ['as' => 'report-page', 'uses' => 'AdminController@getReport']);
@@ -57,6 +60,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/pricesetting-option', ['as' => 'pricesetting-option-page', 'uses' => 'AdminController@getPricesettingOption']);
 		Route::get('/onetime-pricesetting-lingwei', ['as' => 'onetime-pricesetting-lingwei-page', 'uses' => 'AdminController@getOneTimePricesettingLingwei']);
 		Route::get('/onetime-pricesetting-shengzhupai', ['as' => 'onetime-pricesetting-shengzhupai-page', 'uses' => 'AdminController@getOneTimePricesettingShengzhupai']);
+
+		Route::post('/add-otheroption', ['as' => 'add-otheroption-page', 'uses' => 'AdminController@postAddOtherOption']);
+		Route::post('/change-otheroption', ['as' => 'change-otheroption-page', 'uses' => 'AdminController@changeOtherOption']);
 
   });
 

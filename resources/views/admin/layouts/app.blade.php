@@ -128,8 +128,9 @@
                                                       <a href="{{ URL::to('/admin/all-shengzhupai') }}">神主牌列表(查询神主牌的使用情况)</a>
                                             </li>
                                             <li>
-                                                <a href="{{ URL::to('/admin/setting-otheroption') }}">增加减少 其他选项</a>
+                                                <a href="{{ URL::to('/admin/add-otheroption') }}">增加 其他选项</a>
                                             </li>
+
                                             <li>
                                                   <a href="{{ URL::to('/admin/all-otheroption') }}">其他选项列表</a>
                                             </li>
@@ -164,7 +165,7 @@
                                                   <a href="{{ URL::to('/admin/pricesetting-bei') }}">调整埕/石碑价格</a>
                                                 </li>
                                                 <li>
-                                                      <a href="{{ URL::to('/admin/pricesetting-option') }}">调整选项价格</a>
+                                                      <a href="{{ URL::to('/admin/all-otheroption') }}">调整选项价格</a>
                                                     </li>
                                                     <li>
                                                           <a href="{{ URL::to('/admin/onetime-pricesetting-lingwei') }}">灵位一次性提价</a>

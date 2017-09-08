@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Staff;
 use App\Models\User;
+use App\Models\SelectionOption;
 use App\Models\Shengzhupaislots;
 use Auth;
 use DB;
@@ -73,16 +74,119 @@ class AdminController extends Controller
 		}
 
 		// Get SettingOtherOption
-		public function getSettingOtherOption()
+		public function getAddOtherOption()
 		{
-
+					return view('admin.add-otheroption');
 		}
+
+		public function postAddOtherOption(Request $request)
+		{
+			$input = array_except($request->all(), '_token');
+
+			$validator = $this->validate($request, [
+	            'name' => 'required|string',
+	            'description' => 'string',
+	            'price'	=> 'required|numeric'
+	        ]);
+
+	        if ($validator && $validator->fails()) {
+	            return redirect()->back()
+	                ->withErrors($validator)
+	                ->withInput();
+	        }
+
+
+
+			SelectionOption::create($input);
+
+			$request->session()->flash('success', 'New 其他选项 successfully added!');
+			return redirect()->back();
+		}
+
+
+
+
+		// Edit Other Option
+		public function getEditOtherOption($id)
+		{
+	        $staff = User::find($id);
+
+	        if (!$staff) {
+	            return view('errors.503');
+	        }
+
+			return view('admin.edit-account', [
+	            'staff' => $staff
+	        ]);
+		}
+
+		public function changeOtherOption(Request $request)
+		{
+			$input = Input::except('_token');
+
+	        $validator = $this->validate($request, [
+	            'first_name' => 'required|string',
+	            'last_name' => 'required|string',
+	            'user_name'	=> 'required|string',
+	            'password' => 'required',
+	            'confirm_password' => 'required',
+	            'role' => 'required'
+	        ]);
+
+	        if ($validator && $validator->fails()) {
+	            return redirect()->back()
+	                ->withErrors($validator)
+	                ->withInput();
+	        }
+
+	        if ($input['password'] != $input['confirm_password']) {
+
+	            $request->session()->flash('error', "Password don't match. Please Try Again");
+	            return redirect()->back()->withInput();
+	        }
+
+	        $staff = User::find($input['staff_id']);
+
+	        $staff->first_name = $input['first_name'];
+	        $staff->last_name = $input['last_name'];
+	        $staff->user_name = $input['user_name'];
+	        $staff->password = Hash::make($input['password']);
+	        $staff->role = $input['role'];
+	        $staff->save();
+
+	        $request->session()->flash('success', 'User account has been updated!');
+
+	        return redirect()->back();
+		}
+
+
+		// Delete Account
+		public function deleteOtherOption($id)
+		{
+			$staff = User::where('id', '=', $id);
+
+	        if (!$staff) {
+	            $request->session()->flash('error', 'Selected Account is not found.');
+	            return redirect()->back();
+	        }
+
+	        $staff->delete();
+
+	        return redirect()->back();
+		}
+
 
 		// Get AllOtheroption
 		public function getAllOtheroption()
 		{
+			$selection_options = SelectionOption::get();
 
+
+			return view('admin.all-otheroption', [
+	            'selection_options' => $selection_options
+	        ]);
 		}
+
 
 		// Get ChangeZuolingStatus
 		public function getChangeZuolingStatus()
