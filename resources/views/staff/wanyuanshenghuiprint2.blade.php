@@ -11,10 +11,7 @@
 
 
     <link href="{{ asset('/css/LISU.css') }}" rel="stylesheet" type="text/css" />
-    <?php
-    define("MEDIAWIKI_PATH", __DIR__."/../../../public/mediawiki/mediawiki-1.23.9");
-    require_once  __DIR__."/../../../public/mediawiki/mediawiki-zhconverter.inc.php";
-    ?>
+
 </head>
 <body style='margin:0px;'>
     @foreach($wanyuanshenghuis as $wanyuanshenghui)
@@ -23,28 +20,28 @@
    <br>
      <div style='margin-top:12px;height:660px;'>
          @if(count($wanyuanshenghui->lines) == 3 )
-    <div style='float:right;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]), "zh-hk"); ?></div>
-    <div style='float:right;width:88.33px;'><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[1]), "zh-hk"); ?></div>
-   <div style='width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[2]), "zh-hk"); ?></div>
+    <div style='float:right;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]) }}</div>
+    <div style='float:right;width:88.33px;'>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[1]) }}</div>
+   <div style='width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[2]) }}</div>
    @elseif(count($wanyuanshenghui->lines) == 2 )
    @if (strpos($wanyuanshenghui->lines[1], '历代祖先') !== FALSE)
-<div style='margin-right:44px;float:right;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]), "zh-hk"); ?></div>
+<div style='margin-right:44px;float:right;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]) }}</div>
 @else
-<div style='margin-right:44px;float:right;width:88.33px;'><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]), "zh-hk"); ?></div>
+<div style='margin-right:44px;float:right;width:88.33px;'>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]) }}</div>
 @endif
 @if (strpos($wanyuanshenghui->lines[0], '历代祖先') !== FALSE)
-<div style='margin-left:44px;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[1]), "zh-hk"); ?></div>
+<div style='margin-left:44px;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[1]) }}</div>
 @else
-<div style='margin-left:44px;width:88.33px;'><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[1]), "zh-hk"); ?></div>
+<div style='margin-left:44px;width:88.33px;'>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[1]) }}</div>
 @endif
 
   @else
       <div style='float:right;width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div></div>
-      <div style='float:right;width:88.33px;'><?php echo MediaWikiZhConverter::convert(preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]), "zh-hk"); ?></div>
+      <div style='float:right;width:88.33px;'>{{ preg_replace("/\\s+/iu","", $wanyuanshenghui->lines[0]) }}</div>
      <div style='width:88.33px;'><div style='width:88.33px;'>&emsp;</div><div style='width:88.33px;'>&emsp;</div></div>
     @endif
     </div>
-     <div style='margin:auto;width:88.33px;'>靈位</div>
+     <div style='margin:auto;width:88.33px;'>灵位</div>
     </div>
     <div style='width:263;height:125px;line-height:1.2;margin:auto;font-size:59px'><div style='width:88.33px;'>&emsp;</div></div>
   </div>
