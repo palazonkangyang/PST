@@ -13,92 +13,72 @@ use Session;
 use View;
 use URL;
 use Validator;
-
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
 	public function __construct()
-    {
-
-    }
+  {
+  }
 
 	public function postAuthenticate(Request $request)
 	{
 		$auth = false;
-        $credentials = $request->only('user_name', 'password');
+    $credentials = $request->only('user_name', 'password');
 
-        $user = User::where('user_name', $credentials['user_name'])->first();
+    $user = User::where('user_name', $credentials['user_name'])->first();
 
-        if ( !$user ) {
+    if ( !$user ) {
+			$request->session()->flash('error', 'Unauthorised User Access !! INVALID User ID or Password !!');
+			return redirect()->back();
+    }
 
-            return response()->json([
-                'auth' => $auth,
-                'redirect' => ''
-            ]);
+    elseif (Auth::attempt(['user_name' => $credentials['user_name'], 'password' => $credentials['password']])) {
+      $auth = true;
+    }
 
-        }
+		else {
+			$request->session()->flash('error', 'Unauthorised User Access !! INVALID User ID or Password !!');
+			return redirect()->back();
+		}
 
-        if (Auth::attempt(['user_name' => $credentials['user_name'], 'password' => $credentials['password']])) {
-            $auth = true;
-        }
+    if ($request->ajax() ) {
 
-        if ($request->ajax() ) {
-            return response()->json([
-                'auth' => $auth,
-                'redirect' => '/operator/index'
-            ]);
-        }
+		  return response()->json([
+        'auth' => $auth,
+        'redirect' => '/operator/index'
+      ]);
+  	}
 
-        else if ($request->ajax() ) {
-            return response()->json([
-                'auth' => $auth,
-                'redirect' => '/operator/index'
-            ]);
-        }
+    else if ($request->ajax() ) {
+      return response()->json([
+        'auth' => $auth,
+        'redirect' => '/operator/index'
+      ]);
+    }
 
-        else {
-            if ($user->role == 3 ||  $user->role == 4 || $user->role == 5 ) {
-                return redirect()->intended(URL::route('main-page'));
-            }else{
-            return redirect()->intended(URL::route('all-accounts-page'));
-        }
-        }
+		else {
+			if ($user->role == 4 ||  $user->role == 6) {
+	    	return redirect()->intended(URL::route('manage-expenditure-page'));
+	    }
+
+			else
+			{
+	      return redirect()->intended(URL::route('main-page'));
+	    }
+		}
 	}
 
 	public function logout()
-    {
-			// remove session data
-			if(Session::has('focus_devotee'))
-			{
-				Session::forget('focus_devotee');
-			}
+  {
+		$user = User::find(Auth::user()->id);
 
-			if(Session::has('devotee_lists'))
-			{
-				Session::forget('devotee_lists');
-			}
+		$user->last_login = Carbon::now('Asia/Singapore');
+		$user->save();
 
-			if(Session::has('optionaladdresses'))
-			{
-				Session::forget('optionaladdresses');
-			}
+		Session::flush();
 
-			if(Session::has('optionalvehicles'))
-			{
-				Session::forget('optionalvehicles');
-			}
-
-			if(Session::has('specialRemarks'))
-			{
-				Session::forget('specialRemarks');
-			}
-
-			if(Session::has('relative_friend_lists'))
-			{
-				Session::forget('relative_friend_lists');
-			}
-
-      Auth::logout();
-      return redirect()->intended(URL::route('login-page'));
-    }
+    Auth::logout();
+    return redirect()->intended(URL::route('login-page'));
+  }
 }

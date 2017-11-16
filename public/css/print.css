@@ -1,23 +1,53 @@
 body{
-  font-size: 13px;
+  font-size: 16px;
 }
 
 header{
-  height: 1mm;
+  height: 3mm;
 }
 
 article{
   overflow: hidden;
 }
 
+p{
+  margin: 0;
+  padding: 0;
+}
+
+.paidby{
+  margin-top: 10px;
+}
+
+.paidby p{
+  margin-bottom: 10px;
+}
+
 #leftcontent{
-  width: 110mm;
+  width: 120mm;
+  margin-right: 1mm;
   float: left;
 }
 
+#centrecontent{
+  width: 199mm;
+margin-right: 1mm;
+height: 110mm;
+margin-top: 3mm;
+float: left;
+}
+
+#bottomcontent{
+  width: 199mm;
+margin-right: 1mm;
+margin-top: 8mm;
+float: left;
+}
+
 #rightcontent{
-  width: 78mm;
+  width: 72mm;
   float: right;
+  padding-top:8mm;
 }
 
 .receipt-info{
@@ -25,13 +55,43 @@ article{
 }
 
 .receipt-list{
-  margin-top: 0.2mm;
   overflow: hidden;
+  float:right;
+    width: 72mm;
+}
+
+hr{
+  width: 100%;
+}
+
+label-mainwrapper{
+  width: 100%;
 }
 
 .label-wrapper{
-	width: 11cm;
-	margin: 0.3cm;
+  width: 100mm;
+margin: 0.2cm 0;
+	overflow: hidden;
+  float: left;
+}
+
+.label-wrapper2{
+	width: 52mm;
+	margin: 0.05cm 0;
+	overflow: hidden;
+  float: left;
+}
+
+.right-wrapper{
+	width: 60mm;
+	margin: 0.1cm 0;
+	overflow: hidden;
+  float: left;
+}
+
+.label-rightwrapper{
+	width: 100%;
+	margin: 0.2cm 0;
 	overflow: hidden;
 }
 
@@ -40,39 +100,42 @@ article{
 }
 
 .label-left{
-	width: 5cm;
+	width: 35mm;
 	float: left;
 }
 
 .label-right{
-	width: 4cm;
 	float: left;
+}
+
+.label-right2{
+	width: 27mm;
+	float: left;
+}
+
+.rightlabel-left{
+	width: 40mm;
+	float: left;
+}
+
+.rightlabel-right{
+	width: 31mm;
+	float: left;
+  text-align: right;
 }
 
 table.receipt-table {
 	width: 100%;
-	font-family: verdana,arial,sans-serif;
-	font-size: 9px;
-	color: #333;
-	border-width: 1px;
-	border-color: #666;
-	border-collapse: collapse;
+	color: #000;
 }
+
 table.receipt-table th {
 	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666;
-	background-color: #dedede;
+	padding: 1px;
 }
+
 table.receipt-table td {
 	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666;
-	background-color: #fff;
-}
-
-footer{
-
+	padding: 1px;
+  text-align: center;
 }

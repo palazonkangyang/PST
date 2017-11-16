@@ -2,14 +2,190 @@
   display: none;
 }
 
-#members_table{
-  width: 1320px!important;
+#devotees_table, #members_table, #deceased_table, #search_table{
+  width: 100%!important;
+}
+
+#glaccountgroup-table, #glaccount-table, #journalentry-table, #vendor-table, #pettycash-table, #payment-table{
+  width: 100%!important;
 }
 
 .form-group{
   overflow: hidden;
 }
 
-.info-detail p{
-  margin: 0 0 10px !important;
+.local-address{
+  padding: 6px 12px 6px 22px!important;
 }
+
+.pagination{
+  margin: 0!important;
+}
+
+.payment{
+  padding-top: 4px;
+}
+
+.info-detail p{
+  margin: 0 0 10px!important;
+}
+
+#festive-event-table input[type=checkbox] {
+    zoom: 1.5!important;
+}
+
+.form-group label{
+  padding: 6px 12px;
+}
+
+.separator{
+  padding: 6px 12px !important;
+}
+
+#devotees_table_wrapper .col-sm-12, #members_table_wrapper .col-sm-12, #deceased_table_wrapper .col-sm-12,
+#tab_relocation .relocation-devotee-table{
+  overflow-x: scroll!important;
+}
+
+.mt-radio-list label{
+  padding: 0px 23px!important;
+  font-size: 13px;
+}
+
+.inbox-sidebar label{
+  padding: 0;
+}
+
+#appendAddressBtn, #appendVehicleBtn, #appendSpecRemarkBtn{
+  cursor: pointer;
+}
+
+#AddressBtn, #VehicleBtn, #SpecRemarkBtn{
+  cursor: pointer;
+}
+
+.removeAddressBtn1, .removeVehicleBtn1, .removeSpecRemarkBtn1, .removeRow{
+  cursor: pointer;
+  padding-top: 10px;
+}
+
+.removeAddressBtn, .removeVehicleBtn, .removeSpecRemarkBtn{
+  cursor: pointer;
+  padding-top: 10px;
+}
+
+.removeDevotee{
+  cursor: pointer;
+}
+
+.removeEventRow{
+  cursor: pointer;
+}
+
+.no-height, .same{
+  height: auto!important;
+}
+
+.hover{
+  background: #ddd;
+}
+
+.highlight{
+  text-decoration: underline;
+}
+
+.portlet.light .dataTables_wrapper .dt-buttons{
+  margin-top: 0!important;
+}
+
+.dataTables_wrapper .dt-buttons{
+  float: left!important;
+}
+
+.print-btn{
+  margin-bottom: 20px;
+}
+
+.page-header .page-header-top .top-menu .navbar-nav > li.dropdown-user > .dropdown-menu{
+  width: 230px!important;
+}
+
+/*#filter input{
+  width: 0!important;
+}*/
+
+.filter1 input{
+  width: 100px!important;
+}
+
+.filter2 input, .filter3 input{
+  width: 70px!important;
+}
+
+.filter4 input{
+  width: 200px!important;
+}
+
+.filter5 input{
+  width: 100px!important;
+}
+
+.filter6 input{
+  width: 150px!important;
+}
+
+.filter7 input{
+  width: 100px!important;
+}
+
+.filter8 input, .filter9 input{
+  width: 70px!important;
+}
+
+.filter10 input{
+  width: 90px!important;
+}
+
+table.datables, table.datatables tr {
+    overflow-x: scroll;
+}
+
+#transaction_wrap .col-md-4{
+  padding-right: 0!important;
+}
+
+#transaction_wrap .col-md-8{
+  padding-left: 0!important;
+}
+
+
+.autocomplete-suggestions {border: 1px solid #999;background: #FFF;cursor: default;overflow: auto;-webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);-moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);}
+.autocomplete-suggestion {padding: 2px 5px;white-space: nowrap;overflow: hidden;}
+.autocomplete-no-suggestion { padding: 2px 5px;}
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: bold; color: #000; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
+
+
+
+/*.populate-data, .edit-populate-data{
+  margin-left: 30px;
+}
+
+.address-data, .edit-address-data{
+  width: 248px;
+}
+
+.optional-wrapper{
+  padding-right: 0;
+  padding-left: 0;
+  width: 90px;
+}
+
+.vehicle-data{
+  width: 335px;
+}
+.special-remark{
+  padding-left: 0;
+}*/

@@ -83,16 +83,16 @@
                            <div class="col-md-12">
 
                              <div class="col-md-6 info-detail">
-                               <p>Receipt Date : {{ \Carbon\Carbon::parse($receipt[0]->trans_date)->format("d/m/Y") }}</p>
-                               <p>Paid By : {{ $receipt[0]->chinese_name }} (D - {{ $receipt[0]->devotee_id }})</p>
-                               <p>Description : {{ $receipt[0]->description }}</p>
-                               <p>Donation for next Event : {{ $festiveevent->event }}</p>
+                               <p>Receipt Date (日期) : {{ \Carbon\Carbon::parse($receipt[0]->trans_date)->format("d/m/Y") }}</p>
+                               <p>Paid By (付款者) : {{ $receipt[0]->chinese_name }} (D - {{ $receipt[0]->devotee_id }})</p>
+                               <p>Description (项目) : 香油</p>
+                               <p>Donation for Next Event (法会香油) : {{ $festiveevent->event }}</p>
                              </div><!-- end col-md-6 -->
 
                              <div class="col-md-6 info-detail">
                                <p>Receipt No : {{ $receipt[0]->xy_receipt }}</p>
                                <p>Transaction No : {{ $receipt[0]->trans_no }}</p>
-                               <p>Attended By : </p>
+                               <p>Attended By : {{ $receipt[0]->first_name }} {{ $receipt[0]->last_name }}</p>
                              </div><!-- end col-md-6 -->
 
                            </div><!-- end col-md-12 -->
@@ -107,9 +107,7 @@
                      						<th>S/No</th>
                      						<th>Chinese Name</th>
                      						<th>Devotee</th>
-                     						<th>Block</th>
                      						<th>Address</th>
-                     						<th>Unit</th>
                      						<th>HJ/ GR</th>
                      						<th>Receipt</th>
                      						<th>Amount</th>
@@ -126,9 +124,15 @@
                      						<td>{{ $count }}</td>
                      						<td>{{ $donation_devotee->chinese_name }}</td>
                      						<td>{{ $donation_devotee->devotee_id }}</td>
-                     						<td>{{ $donation_devotee->address_houseno }}</td>
-                     						<td>{{ $donation_devotee->address_street }}</td>
-                     						<td>{{ $donation_devotee->address_unit1 }} {{ $donation_devotee->address_unit2 }}</td>
+                     						<td>
+                                  @if(isset($donation_devotee->oversea_addr_in_chinese))
+                                    {{ $donation_devotee->oversea_addr_in_chinese }}
+                                  @elseif(isset($donation_devotee->address_unit1) && isset($donation_devotee->address_unit2))
+                                    {{ $donation_devotee->address_houseno }}, #{{ $donation_devotee->address_unit1 }}-{{ $donation_devotee->address_unit2 }}, {{ $donation_devotee->address_street }}, {{ $donation_devotee->address_postal }}
+                                  @else
+                                    {{ $donation_devotee->address_houseno }}, {{ $donation_devotee->address_street }}, {{ $donation_devotee->address_postal }}
+                                  @endif
+                                </td>
                      						<td>{{ $donation_devotee->hjgr }}</td>
                      						<td>{{ $receipt[0]->xy_receipt }}</td>
                      						<td>S$ {{ $donation_devotee->amount }}</td>
@@ -142,25 +146,38 @@
 
                          </div><!-- end form-group -->
 
-                         @php dd($receiptdetail); @endphp
-
-                         @if(count($receiptdetail) > 0)
-
-                         @if($receiptdetail[0]->status == 'cancelled')
-
-                         <div class="form-group">
-                           <p class="text-danger">
-                             This Transaction has been cancelled on {{ \Carbon\Carbon::parse($receiptdetail[0]->cancelled_date)->format("d/m/Y") }}
-                             by {{ $receiptdetail[0]->first_name }} {{ $receiptdetail[0]->last_name }}. No Printing is allowed!!
-                           </p>
-                         </div><!-- end form-group -->
-
-                         @endif
+                         @if(Session::has('cancelled_date'))
+                             <p class="text-center text-danger">
+                               This Transaction has been cancelled by {{ Session::get('cancelled_date') }} by
+                               {{ Session::get('first_name') }} {{ Session::get('last_name') }}. No Printing is allowed!!
+                             </p>
                          @endif
 
                          <div class="form-group">
-                           <p>Payment Mode : {{ $generaldonation->mode_payment }}</p>
-                           <p>Total Amount : S$ {{ $sum }}</p>
+                           <div class="col-md-12">
+
+                             <div class="col-md-4">
+                               <p>Payment Mode : {{ $generaldonation->mode_payment }}</p>
+
+                               @if(Session::has('cancelled_date'))
+                                <p><span class="text-white">Payment Mode :</span><span class="text-danger">(Refuned/ Returned)</span></p>
+
+                               @endif
+
+                             </div><!-- end col-md-4 -->
+
+                             <div class="col-md-4">
+                               @if(Session::has('cancelled_date'))
+                                <p>Total Amount : S$ <span class="text-danger">{{ $sum }}</span></p>
+                               @else
+                                <p>Total Amount : S$ {{ $sum }}</p>
+                               @endif
+                             </div><!-- end col-md-4 -->
+
+                             <div class="col-md-4">
+                             </div><!-- end col-md-4 -->
+
+                           </div><!-- end col-md-12 -->
                          </div><!-- end form-group -->
 
                          <div class="form-group">
@@ -190,10 +207,11 @@
 
                           <input type="hidden" name="receipt_id" value="{{ $receipt[0]->receipt_id }}">
 
+
                           <div class="form-group">
 
                             <div class="col-md-6">
-
+                              @if(!Session::has('cancelled_date'))
                               <label class="col-md-4 control-label">Authorized Password</label>
                               <div class="col-md-4">
                                   <input type="password" class="form-control"
@@ -201,10 +219,16 @@
                               </div><!-- end col-md-4 -->
                               <div class="col-md-4">
                               </div><!-- end col-md-4 -->
-
+                              @endif
                             </div><!-- end col-md-6 -->
 
                             <div class="col-md-6">
+                                @if(Session::has('cancelled_date'))
+                                <p class="text-danger">
+                                  This Transaction has been cancelled. <br />
+                                  No Cancellation is allowed.
+                                </p>
+                                @endif
                             </div><!-- end col-md-6 -->
 
                           </div><!-- end form-group -->
@@ -214,9 +238,11 @@
 
                               <div class="col-md-6">
                                 <div class="form-actions">
-                                    <button type="submit" class="btn blue" id="receipt_cancel_btn">Confirm
-                                    </button>
-                                    <button type="button" class="btn default">Cancel</button>
+                                  @if(!Session::has('cancelled_date'))
+                                    <button type="submit" class="btn blue" id="receipt_cancel_btn">Cancel & Replace Transaction</button>
+                                    <a href="/staff/cancel-transaction/{{ $receipt[0]->receipt_id }}" class="btn default">Cancel Transaction</a>
+                                  @endif
+                                  <a href="/staff/donation" class="btn default">Back</a>
                                 </div><!-- end form-actions -->
                               </div><!-- end col-md-6 -->
 
@@ -251,5 +277,56 @@
     </div><!-- end page-content-wrapper -->
 
   </div><!-- end page-container-fluid -->
+
+@stop
+
+@section('custom-js')
+
+<script src="{{asset('js/custom/common.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+  $(function() {
+
+    $("#receipt_cancel_btn").click(function() {
+
+      var count = 0;
+      var errors = new Array();
+      var validationFailed = false;
+      var authorized_password = $("#authorized_password").val();
+
+      if ($.trim(authorized_password).length <= 0)
+      {
+          validationFailed = true;
+          errors[count++] = "Unauthorised User Access !! Changes will NOT be Saved !! Please re-enter Authorised User Access to save Changes !!"
+      }
+
+      if (validationFailed)
+      {
+          var errorMsgs = '';
+
+          for(var i = 0; i < count; i++)
+          {
+              errorMsgs = errorMsgs + errors[i] + "<br/>";
+          }
+
+          $('html,body').animate({ scrollTop: 0 }, 'slow');
+
+          $(".validation-error").addClass("bg-danger alert alert-error")
+          $(".validation-error").html(errorMsgs);
+
+          return false;
+      }
+
+      else
+      {
+          $(".validation-error").removeClass("bg-danger alert alert-error")
+          $(".validation-error").empty();
+      }
+
+    });
+  });
+</script>
 
 @stop

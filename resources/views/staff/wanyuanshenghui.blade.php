@@ -91,7 +91,7 @@
 
                                                                 <div class="form-group">
 
-                                                                    <h4> 同址善信 主家</h4>
+                                                                    <h4> 同址主家</h4>
 
                                                                     <table class="table table-bordered" id="generaldonation_table">
                                                                         <thead>
@@ -203,7 +203,7 @@
 
                                                                             <div class="col-md-3">
                                                                                 <button type="button" class="btn default" id="search_devotee_btn">
-                                                                                    Search Devotee 搜寻善信
+                                                                                    Search Devotee 搜寻主家
                                                                                 </button>
                                                                             </div><!-- end-com-md-3 -->
                                                                         </div><!-- end col-md-6 -->

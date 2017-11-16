@@ -28,7 +28,7 @@
                         <li>
                             <a href="/operator/index">Home</a>
                             <i class="fa fa-circle"></i>
-               
+
                         </li>
                         <li>
                             <span>灵塔</span>
@@ -76,7 +76,7 @@
 
                                                 <div class="tabbable-bordered">
 
-                                                
+
 
                                                     <div class="tab-content">
 
@@ -91,7 +91,7 @@
 
                                                                 <div class="form-group">
 
-                                                                    <h4> 同址善信 主家</h4>
+                                                                    <h4> 同址主家</h4>
 
                                                                     <table class="table table-bordered" id="generaldonation_table">
                                                                         <thead>
@@ -107,7 +107,7 @@
                                                                                 <th>Block</th>
                                                                                 <th>Address</th>
                                                                                 <th>Unit</th>
-                                                                              
+
                                                                             </tr>
                                                                         </thead>
 
@@ -128,7 +128,7 @@
                                                                             <td>{{ $focus_devotee[0]->chinese_name }}</td>
                                                                             <td>{{ $focus_devotee[0]->english_name }}</td>
                                                                             <td>{{ $focus_devotee[0]->nric }}</td>
-                                                                             <td>{{ $focus_devotee[0]->contact }}</td>  
+                                                                             <td>{{ $focus_devotee[0]->contact }}</td>
                                                                                 <td>{{ $focus_devotee[0]->dob }}</td>
                                                                                 <td>
                                                                                     {{ $focus_devotee[0]->devotee_id }}
@@ -141,7 +141,7 @@
                                                                                     {{ $focus_devotee[0]->address_unit1 }}
                                                                                     {{ $focus_devotee[0]->address_unit2 }}
                                                                                 </td>
-                                                                                
+
                                                                             </tr>
 
                                                                             @foreach($devotee_lists as $devotee)
@@ -163,7 +163,7 @@
                                                                                 <td>{{ $devotee->address_street }}</td>
                                                                                 <td>{{ $devotee->address_unit1 }} {{ $devotee->address_unit2 }}
                                                                                 </td>
-                                                                                
+
                                                                             </tr>
 
                                                                             @endforeach
@@ -203,7 +203,7 @@
 
                                                                             <div class="col-md-3">
                                                                                 <button type="button" class="btn default" id="search_devotee_btn">
-                                                                                    Search Devotee 搜寻善信
+                                                                                    Search Devotee 搜寻主家
                                                                                 </button>
                                                                             </div><!-- end-com-md-3 -->
                                                                         </div><!-- end col-md-6 -->
@@ -230,7 +230,7 @@
                                                                                 <th>Block</th>
                                                                                 <th>Address</th>
                                                                                 <th>Unit</th>
-                                                                              
+
                                                                             </tr>
                                                                         </thead>
 
@@ -321,7 +321,7 @@
                                                           </div><!-- end col-md-6 -->
                                                             <!-- start of col-md-6 -->
                                                               <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                           <div class="col-md-6">
                                                             <label class="col-md-4">火化证号码:</label>
                                                              <div class="col-md-8"><input type="text" name="ancestor_certno_a" value=""
@@ -339,7 +339,7 @@
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                             <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                            <!-- start of col-md-6 -->
                                                             <div class="col-md-6">
                                                             <label class="col-md-4">埕相:</label>
@@ -359,7 +359,7 @@
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                                <!-- start of col-md-6 -->
-                                                              
+
                                                           <div class="col-md-6">
                                                             <label class="col-md-4">旧号:</label>
                                                              <div class="col-md-8"><input type="text" name="ancestor_oldno_a" value=""
@@ -367,7 +367,7 @@
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                           <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                             <!-- start of col-md-6 -->
                                                             <div class="col-md-6">
                                                             <label class="col-md-4">使用情况:</label>
@@ -380,13 +380,13 @@
                                                           </div><!-- end col-md-6 -->
                                                             <!-- start of col-md-6 -->
                                                             <div class="col-md-6">
-                                                      
+
                                                              <div class="col-md-8"><input type="text" data-provide="datepicker" data-date-format="dd/mm/yyyy" name="ancestor_date_a" value=""
                                                           class="form-control" id="ancestor_date_a"/>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                             <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                               <h4>先人资料(B) </h4>
                                                                      <br>
                                                           <!-- start of col-md-6 -->
@@ -405,7 +405,7 @@
                                                           </div><!-- end col-md-6 -->
                                                             <!-- start of col-md-6 -->
                                                               <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                           <div class="col-md-6">
                                                             <label class="col-md-4">火化证号码:</label>
                                                              <div class="col-md-8"><input type="text" name="ancestor_certno_b" value=""
@@ -423,7 +423,7 @@
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                             <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                            <!-- start of col-md-6 -->
                                                             <div class="col-md-6">
                                                             <label class="col-md-4">埕相:</label>
@@ -443,7 +443,7 @@
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                                <!-- start of col-md-6 -->
-                                                              
+
                                                           <div class="col-md-6">
                                                             <label class="col-md-4">旧号:</label>
                                                              <div class="col-md-8"><input type="text" name="ancestor_oldno_b" value=""
@@ -451,7 +451,7 @@
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                           <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                             <!-- start of col-md-6 -->
                                                             <div class="col-md-6">
                                                             <label class="col-md-4">使用情况:</label>
@@ -464,13 +464,13 @@
                                                           </div><!-- end col-md-6 -->
                                                             <!-- start of col-md-6 -->
                                                             <div class="col-md-6">
-                                                      
+
                                                              <div class="col-md-8"><input type="text" data-provide="datepicker" data-date-format="dd/mm/yyyy" name="ancestor_date_b" value=""
                                                           class="form-control" id="ancestor_date_b"/>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
                                                             <div class="clearfix"></div>
-                                                             <br>  
+                                                             <br>
                                                               <h4>石碑资料(A) </h4>
                                                          <br>
                                                           <!-- start of col-md-6 -->
@@ -483,14 +483,14 @@
                                                                             </select>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                              <!-- start of col-md-6 --> 
+                                                              <!-- start of col-md-6 -->
                                                           <div class="col-md-4">
                                                             <label class="col-md-4">市:</label>
                                                              <div class="col-md-8"><input type="text" name="stone_city_a" value=""
                                                           class="form-control" id="stone_city_a"/>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                           <!-- start of col-md-6 --> 
+                                                           <!-- start of col-md-6 -->
                                                           <div class="col-md-4">
                                                             <label class="col-md-4">年龄:</label>
                                                              <div class="col-md-8"><input type="text" name="stone_age_a" value=""
@@ -532,7 +532,7 @@
                                                           </div><!-- end col-md-6 -->
                                                           <div class="clearfix"></div>
                                                              <br>
-                                                              <!-- start of col-md-6 --> 
+                                                              <!-- start of col-md-6 -->
                                                           <div class="col-md-6">
                                                             <label class="col-md-4">增加文字:</label>
                                                              <div class="col-md-8"><input type="text" name="stone_addword_a" value=""
@@ -575,7 +575,7 @@
                                                           class="form-control" id="stone_makeupdate_a"/>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                       
+
                                                             <div class="col-md-6">
                                                              <label class="col-md-5">碑是否做好? :</label>
                                                             <div class="col-md-6">
@@ -609,14 +609,14 @@
                                                                             </select>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                              <!-- start of col-md-6 --> 
+                                                              <!-- start of col-md-6 -->
                                                           <div class="col-md-4">
                                                             <label class="col-md-4">市:</label>
                                                              <div class="col-md-8"><input type="text" name="stone_city_b" value=""
                                                           class="form-control" id="stone_city_b"/>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                           <!-- start of col-md-6 --> 
+                                                           <!-- start of col-md-6 -->
                                                           <div class="col-md-4">
                                                             <label class="col-md-4">年龄:</label>
                                                              <div class="col-md-8"><input type="text" name="stone_age_b" value=""
@@ -658,7 +658,7 @@
                                                           </div><!-- end col-md-6 -->
                                                           <div class="clearfix"></div>
                                                              <br>
-                                                              <!-- start of col-md-6 --> 
+                                                              <!-- start of col-md-6 -->
                                                           <div class="col-md-6">
                                                             <label class="col-md-4">增加文字:</label>
                                                              <div class="col-md-8"><input type="text" name="stone_addword_b" value=""
@@ -701,7 +701,7 @@
                                                           class="form-control" id="stone_makeupdate_b"/>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                       
+
                                                             <div class="col-md-6">
                                                              <label class="col-md-5">碑是否做好? :</label>
                                                             <div class="col-md-6">
@@ -737,7 +737,7 @@
 
                                                                 </div><!-- end form-group -->
 
-                                                                 <br> 
+                                                                 <br>
                                                            <div class="clearfix"></div>
                                                            <div class="col-md-6">
                                                             <label class="col-md-4">选择会馆 :</label>
@@ -767,7 +767,7 @@
                                                                     <div class="col-md-12">
                                                                         <h5><b>GST: S$ <span class="total_gst"></span></b></h5>
                                                                     </div><!-- end col-md-12 -->
-                                                                  
+
                                                                      <div class="col-md-12">
                                                                         <h5><b>合计: S$ <span class="total_aftergst"></span></b></h5>
                                                                     </div><!-- end col-md-12 -->
@@ -878,7 +878,7 @@
 
                                                                         </div><!-- end col-md-6 -->
 
-                                                                      
+
 
                                                                     </div><!-- end col-md-12 -->
 
@@ -1046,7 +1046,7 @@
         });
 
             $('#association_dd').on('change', function(){
-     
+
        if(this.value != 0 ) {
          $(".total_gst").text(document.getElementById("total_amount").value *0.07) ;
            $(".total_aftergst").text(document.getElementById("total_amount").value *1.07) ;
@@ -1057,7 +1057,7 @@
            $(".total_aftergst").text(document.getElementById("total_amount").value *1.07) ;
 
            }
-    
+
         });
     </script>
 

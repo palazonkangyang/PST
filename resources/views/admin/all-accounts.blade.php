@@ -76,11 +76,11 @@
                                             <table class="table table-bordered" id="all-accounts-table">
                                                 <thead>
 																									<tr id="filter">
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>User Name</th>
-                                                    <th>Role</th>
-                                                    <th>Actions</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
 																									</tr>
                                                   <tr>
                                                     <th>First Name</th>
@@ -140,7 +140,7 @@
 @section('script-js')
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<script src="{{asset('js/custom/common.js')}}"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 

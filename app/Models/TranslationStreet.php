@@ -4,10 +4,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TranslationStreet extends Model
 {
-    protected $table = 'translation_street';
+  protected $table = 'translation_street';
 
-    protected $fillable = [
-        'english',
-        'chinese'
-    ];
+  protected $fillable = [
+    'english',
+    'chinese',
+    'address_houseno',
+    'address_postal'
+  ];
 }

@@ -28,7 +28,7 @@
                         <li>
                             <a href="/operator/index">Home</a>
                             <i class="fa fa-circle"></i>
-               
+
                         </li>
                         <li>
                             <span>神主牌</span>
@@ -76,7 +76,7 @@
 
                                             	<div class="tabbable-bordered">
 
-                                            	
+
 
                                                     <div class="tab-content">
 
@@ -91,7 +91,7 @@
 
                                                     			<div class="form-group">
 
-                                                    				<h4> 同址善信 主家</h4>
+                                                    				<h4> 同址主家</h4>
 
                                                                     <table class="table table-bordered" id="generaldonation_table">
                                                                         <thead>
@@ -107,7 +107,7 @@
                                                                                 <th>Block</th>
                                                                                 <th>Address</th>
                                                                                 <th>Unit</th>
-                                                                              
+
                                                                             </tr>
                                                                         </thead>
 
@@ -123,12 +123,12 @@
                                                                         <tbody id="has_session">
 
                                                                             <tr>
-                                                                            <td><i class='fa fa-minus-circle removeDevotee' aria-hidden='true'></i></td>
+                                                                            <td><input type="radio" name="devotee_selected"  value="{{ $focus_devotee[0]->devotee_id }}" checked></td>
                                                                             <td>{{ $focus_devotee[0]->title }}</td>
                                                                             <td>{{ $focus_devotee[0]->chinese_name }}</td>
                                                                             <td>{{ $focus_devotee[0]->english_name }}</td>
                                                                             <td>{{ $focus_devotee[0]->nric }}</td>
-                                                                             <td>{{ $focus_devotee[0]->contact }}</td> 	
+                                                                             <td>{{ $focus_devotee[0]->contact }}</td>
                                                                                 <td>{{ $focus_devotee[0]->dob }}</td>
                                                                             	<td>
                                                                             		{{ $focus_devotee[0]->devotee_id }}
@@ -141,13 +141,13 @@
                                                                             		{{ $focus_devotee[0]->address_unit1 }}
                                                                             		{{ $focus_devotee[0]->address_unit2 }}
                                                                             	</td>
-                                                                            	
+
                                                                             </tr>
 
                                                                             @foreach($devotee_lists as $devotee)
 
                                                                             <tr>
-                                                                              <td><i class='fa fa-minus-circle removeDevotee' aria-hidden='true'></i></td>
+                                                                              <td><input type="radio" name="devotee_selected"  value="{{ $focus_devotee[0]->devotee_id }}"></td>
                                                                                 <td>{{ $devotee->title }}</td>
                                                                             	<td>{{ $devotee->chinese_name }}</td>
                                                                                 <td>{{ $devotee->english_name }}</td>
@@ -163,7 +163,7 @@
                                                                             	<td>{{ $devotee->address_street }}</td>
                                                                             	<td>{{ $devotee->address_unit1 }} {{ $devotee->address_unit2 }}
                                                                             	</td>
-                                                                            	
+
                                                                             </tr>
 
                                                                             @endforeach
@@ -184,112 +184,10 @@
 
                                                                 </div><!-- end form-group -->
 
-                                                                <div class="form-group">
 
-                                                    				<h4>新增其他主家</h4>
 
-                                                                </div><!-- end form-group -->
 
-                                                                <div class="form-group">
 
-                                                                    <div class="col-md-12">
-
-                                                                        <div class="col-md-6">
-                                                                            <label class="col-md-2">Devotee ID</label>
-
-                                                                            <div class="col-md-5">
-                                                                                <input type="text" class="form-control" id="search_devotee">
-                                                                            </div><!-- end col-md-5 -->
-
-                                                                            <div class="col-md-3">
-                                                                                <button type="button" class="btn default" id="search_devotee_btn">
-                                                                                    Search Devotee 搜寻善信
-                                                                                </button>
-                                                                            </div><!-- end-com-md-3 -->
-                                                                        </div><!-- end col-md-6 -->
-
-                                                                        <div class="col-md-6"></div><!-- end col-md-6 -->
-
-                                                                    </div><!-- end col-md-12 -->
-
-                                                                </div><!-- end form-group -->
-
-                                                                <div class="form-group">
-
-                                                                    <table class="table table-bordered" id="generaldonation_table2">
-                                                                        <thead>
-                                                                            <tr>
-                                                                             <th></th>
-																			  <th>Title</th>
-                                                                                <th>Chinese Name</th>
-                                                                                 <th>English Name</th>
-                                                                                    <th>NRIC</th>
-                                                                                  <th>Contact</th>
-                                                                                  <th>Dob</th>
-                                                                                <th>Devotee#</th>
-                                                                                <th>Block</th>
-                                                                                <th>Address</th>
-                                                                                <th>Unit</th>
-                                                                              
-                                                                            </tr>
-                                                                        </thead>
-
-																																				@if(Session::has('relative_friend_lists'))
-
-																																				@php $relative_friend_lists = Session::get('relative_friend_lists'); @endphp
-
-																																				<tbody id="appendDevoteeLists">
-
-                                                                        @foreach($relative_friend_lists as $list)
-
-                                                                            <tr>
-																																							<td></td>
-                                                                            	<td>{{ $list->chinese_name }}</td>
-																																							<td>{{ $list->relative_friend_devotee_id }}
-																																							<input type="hidden" name="other_devotee_id[]"
-																																							value="{{ $list->relative_friend_devotee_id }}"></td>
-																																							<td>{{ isset($list->address_building) ? $list->address_building : '-' }}</td>
-																																							<td>{{ $list->address_street }}</td>
-																																							<td>{{ $list->address_unit1 }} {{ $list->address_unit2 }}</td>
-																																							<td>{{ $list->guiyi_name }}</td>
-																																							<td class="amount-col">
-                                                                            		<input type="text" class="form-control amount other_amount" name="other_amount[]">
-                                                                            	</td>
-                                                                            	<td>
-                                                                            		<input type="text" class="form-control paid_till other_paid_till"
-                                                                            			name="other_paid_till[]" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-                                                                            	</td>
-                                                                            	<td>
-                                                                            		<select class="form-control" name="other_hjgr_arr[]">
-	                                                                                    <option value="hj">hj</option>
-	                                                                                    <option value="gr">gr</option>
-	                                                                                </select>
-                                                                            	</td>
-                                                                            	<td>
-                                                                            		<select class="form-control" name="other_display[]">
-	                                                                                    <option value="Y">Y</option>
-	                                                                                    <option value="N">N</option>
-	                                                                                </select>
-                                                                            	</td>
-                                                                            	<td></td>
-                                                                            	<td></td>
-                                                                            </tr>
-																																				@endforeach
-
-																																				</tbody>
-
-																																				@else
-
-																																				<tbody id="appendDevoteeLists">
-																																						<tr id="no_data">
-																																								<td colspan="12">No Data</td>
-																																						</tr>
-																																				</tbody>
-
-																																				@endif
-                                                                    </table>
-
-                                                                </div><!-- end form-group -->
 
                                                     		</div><!-- end form-body -->
 
@@ -299,7 +197,7 @@
 
 
                                                              <div class="form-group">
-                                                        
+
                                                            <h4>Slot Selection 选位</h4>
                                                            <!-- start of col-md-4 -->
                                                            <div class="col-md-3">
@@ -320,7 +218,7 @@
                                                                             <div class="form-group">
 
                                                                                 <label class="col-md-5">层次:</label>
-                                                                              <div class="col-md-7"><input type="text" name="ss_level" value="" readonly 
+                                                                              <div class="col-md-7"><input type="text" name="ss_level" value="" readonly
                                                           class="form-control" id="ss_level"/>
                                                           </div><!-- end col-md-7 -->
 
@@ -333,7 +231,7 @@
                                                                             <div class="form-group">
 
                                                                                 <label class="col-md-5">号码:</label>
-                                                                                <div class="col-md-7"><input type="text" name="ss_number" value="" readonly 
+                                                                                <div class="col-md-7"><input type="text" name="ss_number" value="" readonly
                                                           class="form-control" id="ss_number"/>
                                                           </div><!-- end col-md-7 -->
 
@@ -343,11 +241,32 @@
                                                                                 <button type="button" class="btn default" onClick="selectValue('id')"  id="search_devotee_btn" value= "">
                                                                                    选位
                                                                                 </button>
-                                                                                
+
                                                                             </div><!-- end-com-md-3 -->
                                                             <!-- end of col-md-3 -->
                                                             <div class="clearfix"></div>
                                                            <br>
+
+																													 <h4>其他选项资料 </h4>
+																											 <br>
+
+
+					<div class="col-md-12">
+					  <label  class="col-md-2" for="select_otheroption">选择其他选项:</label>
+						 <div class="col-md-8">  <input class="form-control select_otheroption" id="select_otheroption" name="select_otheroption" type="text">
+							  <div class="otheroption-selected"></div>
+								<br />
+								<div class="otheroption-added">
+
+										<h5 class="selecttitle">已选其他选项: </h5>
+										<input type="hidden" id="otheroption_text" name="otheroption_text" value="">
+
+									</div>
+					</div>
+					</div><!-- end col-md-6 -->
+            <br />
+
+
                                                              <h4>神主牌资料 </h4>
                                                          <br>
                                                           <div class="col-md-12">
@@ -356,7 +275,7 @@
                                                           class="form-control" id="name"></textarea>
                                                           </div>
                                                           </div><!-- end col-md-6 -->
-                                                        
+
                                                            <div class="clearfix"></div>
                                                              <br>  <br>
                                                            <div class="col-md-6">
@@ -369,7 +288,7 @@
                                                           </div><!-- end col-md-6 -->
 
 
-                                                        
+
                                                             <div class="col-md-6">
                                                              <label class="col-md-4">入主选项 :</label>
                                                             <div class="col-md-6">
@@ -389,10 +308,10 @@
                                                                                 </div><!-- end col-md-12 -->
 
                                                                             </div><!-- end form-group -->
-                                                                          
 
 
- 
+
+
                                                             <div class="col-md-6">
                                                              <label class="col-md-5">神主牌是否做好? :</label>
                                                             <div class="col-md-6">
@@ -412,7 +331,7 @@
                                                                                 </div><!-- end col-md-12 -->
 
                                                                             </div><!-- end form-group -->
-                                                                            
+
 
 
                                                             </div>
@@ -424,12 +343,22 @@
                                                     			<div class="form-group">
 
 	                                                    			<div class="col-md-12">
-	                                                    				<h5><b>Total Amount 总额: S$ <span class="total"></span></b></h5>
+																															<h5><b>神主牌 价钱 : S$ <span class="szp_price">0</span></b></h5>
+																															<input type="hidden" name="szp_price" id="szp_price" value="0">
+																															<h5><b>神主牌 选位价钱 : S$ <span class="szp_ss_price">0</span></b></h5>
+																															<input type="hidden" name="szp_ss_price" id="szp_ss_price" value="0">
+
+																															<h5><b>其他选项 Amount : S$ <span class="oo_total">0</span></b></h5>
+																															<input type="hidden" name="oo_total" id="oo_total" value="0">
+
+	                                                    				<h5><b>Total Amount 总额: S$ <span class="total">0</span></b></h5>
+																															<input type="hidden" name="total" id="total" value="0">
+
 	                                                    			</div><!-- end col-md-12 -->
 
 	                                                    		</div><!-- end form-group -->
 
-                                                                 <br> 
+                                                                 <br>
                                                            <div class="clearfix"></div>
                                                            <div class="col-md-6">
                                                             <label class="col-md-4">选择会馆 :</label>
@@ -457,17 +386,17 @@
                                                            <div class="form-group">
 
                                                                     <div class="col-md-12">
-                                                                        <h5><b>GST: S$ <span class="total_gst"></span></b></h5>
-                                                                            <input type="hidden" name="total_gst" id="total_gst" value="">
+                                                                        <h5><b>GST: S$ <span class="total_gst"></span>0</b></h5>
+                                                                            <input type="hidden" name="total_gst" id="total_gst" value="0">
                                                                     </div><!-- end col-md-12 -->
-                                                                  
+
                                                                      <div class="col-md-12">
-                                                                        <h5><b>合计: S$ <span class="total_aftergst"></span></b></h5>
-                                                                        <input type="hidden" name="total_aftergst" id="total_aftergst" value="">
+                                                                        <h5><b>合计: S$ <span class="total_aftergst"></span>0</b></h5>
+                                                                        <input type="hidden" name="total_aftergst" id="total_aftergst" value="0">
                                                                     </div><!-- end col-md-12 -->
                                                                       <div class="col-md-12">
-                                                                        <h5><b>会馆折扣(10%): S$ <span class="total_afterdiscount"></span></b></h5>
-                                                                        <input type="hidden" name="total_afterdiscount" id="total_afterdiscount" value="">
+                                                                        <h5><b>会馆折扣(10%): S$ <span class="total_afterdiscount">0</span></b></h5>
+                                                                        <input type="hidden" name="total_afterdiscount" id="total_afterdiscount" value="0">
                                                                     </div><!-- end col-md-12 -->
                                                                 </div><!-- end form-group -->
                                                            <div class="clearfix"></div>
@@ -573,7 +502,7 @@
 
 		                                                    			</div><!-- end col-md-6 -->
 
-		                                                    			
+
 
 	                                                    			</div><!-- end col-md-12 -->
 
@@ -704,11 +633,15 @@
 @stop
 
 @section('custom-js')
+    <script src="{{ asset('/js/jquery.autocomplete.js') }}" type="text/javascript"></script>
+	<script src="{{asset('js/custom/common_nondialog.js')}}"></script>
 
-	<script src="{{asset('js/custom/common.js')}}"></script>
-	<script src="{{asset('js/custom/search-devotee.js')}}"></script>
+	<script src="{{asset('js/custom/optional_selection.js')}}"></script>
 
 	<script type="text/javascript">
+
+
+
 
 function selectValue(pid){
     // open popup window and pass field id
@@ -732,11 +665,16 @@ function updateValue(pid, value){
                           dataType: 'json',
                           success: function(response)
                           {
-                                 
+
                                         document.getElementById('ss_blk').value = response.shengzhupaislots['ss_blk'];
                                             document.getElementById('ss_level').value = response.shengzhupaislots['ss_level'];
                                                 document.getElementById('ss_number').value = response.shengzhupaislots['ss_number'];
-                                   
+																										$(".szp_price").text(response.shengzhupaislots['price']);
+																										$("#szp_price").val(response.shengzhupaislots['price']);
+																										$(".szp_ss_price").text(response.shengzhupaislots['select_price']);
+																										$("#szp_ss_price").val(response.shengzhupaislots['select_price']);
+																										  calTotal();
+
                           },
 
                           error: function (response) {
@@ -750,55 +688,63 @@ function updateValue(pid, value){
 
 
 		$(function() {
-            $(".total").text(1000);
-            $("#total_amount").val(1000);
-              $(".total_gst").text(70);
-            $("#total_gst").val(70);
-              $(".total_aftergst").text(1070);
-            $("#total_aftergst").val(1070);
-            
+
+
+			$('.select_otheroption').autocomplete({
+
+						serviceUrl: '/operator/getjsonotheroption',
+						dataType: 'json',
+						contentType: "application/json; charset=utf-8",
+						type: 'GET',
+
+
+						onSelect: function (suggestion) {
+								getselector = $(this);
+
+								if(suggestion.data.id != '') {
+
+												$('.otheroption-selected').html('<div class="otheroption-selected-row"><b>You selected: </b>' +suggestion.value+ ' <a class="add-otheroption" id="add-otheroption">[ADD]</a></div>');
+										loadAddPerson('.add-otheroption', '.otheroption-selected-row', '.otheroption-added', '.otheroption-selected', suggestion);
+
+						}
+
+
+						},
+						onInvalidateSelection: function() {
+
+											$('.otheroption-selected').html('<b>You selected: </b>none');
+
+
+						},
+						showNoSuggestionNotice: true,
+						noSuggestionNotice: 'Sorry, no matching results'
+				});
+
+
+
+
+
 			// Disabled Edit Devotee Tab
 			$(".nav-tabs > li").click(function(){
 					if($(this).hasClass("disabled"))
 							return false;
 			});
 
-			$('body').on('focus',".paid_till", function(){
-	     		$(this).datepicker({ dateFormat: 'yy-mm-dd' });
-	    });
 
-			$('body').on('keyup',".amount-col", function(){
-	        var sum = 0;
-
-			  $(".amount").each(function(){
-			        sum += +$(this).val();
-		  	});
-
-				$(".total").text(sum);
-				$("#total_amount").val(sum);
-
-	    	});
 
  		});
 
             $('#association_dd').on('change', function(){
-     
+
        if(this.value != 0 ) {
-         $(".total_gst").text(document.getElementById("total_amount").value *0.07) ;
-            $("#total_gst").val(document.getElementById("total_amount").value *0.07) ;
-           $(".total_aftergst").text(document.getElementById("total_amount").value *1.07) ;
-            $("#total_aftergst").val(document.getElementById("total_amount").value *1.07) ;
-            $(".total_afterdiscount").text((document.getElementById("total_amount").value *1.07)*0.9) ;
-              $("#total_afterdiscount").val((document.getElementById("total_amount").value *1.07)*0.9) ;
+
+            $(".total_afterdiscount").text(((document.getElementById("total").value *1.07)*0.9).toFixed(2)) ;
+              $("#total_afterdiscount").val(((document.getElementById("total").value *1.07)*0.9).toFixed(2)) ;
 
            } else {
-           $(".total_gst").text(document.getElementById("total_amount").value *0.07) ;
-            $("#total_gst").val(document.getElementById("total_amount").value *0.07) ;
-           $(".total_aftergst").text(document.getElementById("total_amount").value *1.07) ;
-        $("#total_aftergst").val(document.getElementById("total_amount").value *1.07) ;
 
            }
-    
+
         });
 	</script>
 

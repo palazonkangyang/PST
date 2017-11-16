@@ -9,10 +9,13 @@ class Member extends Model
     protected $primaryKey = "member_id";
 
     protected $fillable = [
+        'member',
         'introduced_by1',
         'introduced_by2',
         'approved_date',
         'cancelled_date',
-        'reason_for_cancel'
+        'reason_for_cancel',
+        'paytill_date',
+        'member'
     ];
 }

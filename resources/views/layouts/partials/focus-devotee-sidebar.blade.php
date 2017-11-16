@@ -4,18 +4,14 @@
 
         @if(Session::has('focus_devotee'))
 
-            @php
-
-                $focus_devotee = Session::get('focus_devotee');
-
-            @endphp
+            @php $focus_devotee = Session::get('focus_devotee'); @endphp
 
             @if(count($focus_devotee) > 1)
 
             <div class="row" id="no_session">
 
                 <div class="col-md-12">
-                    <h4>Focus Devotee 焦点善信</h4>
+                    <h4>Focus Devotee 焦点主家</h4>
                 </div><!-- end col-md-12 -->
 
             </div><!-- end row -->
@@ -39,24 +35,21 @@
 
                       <div class="col-md-9">
                           <div class="form-group">
-                              <label>Name (in Chinese)</label>
+                              <label>Chinese Name</label>
                               <input type="text" class="form-control" name="chinese_name" value="{{ old('chinese_name') }}">
                           </div><!-- end form-group -->
 
                           <div class="form-group">
+                              <label>English Name</label>
+                              <input type="text" class="form-control" name="english_name" value="{{ old('english_name') }}">
+                          </div><!-- end form-group -->
+
+                          <div class="form-group">
                               <label>Devotee ID</label>
-                              <input type="text" class="form-control" name="devotee_id" value="{{ old('devotee_id') }}">
+                              <input type="number" class="form-control" name="devotee_id" value="{{ old('devotee_id') }}" min="1">
                           </div><!-- end form-group -->
 
-                          <div class="form-group">
-                              <label>Member ID</label>
-                              <input type="text" class="form-control" name="member_id" value="{{ old('member_id') }}">
-                          </div><!-- end form-group -->
 
-                          <div class="form-group">
-                              <label>Bridging ID</label>
-                              <input type="text" class="form-control" name="bridging_id" value="{{ old('bridging_id') }}">
-                          </div><!-- end form-group -->
 
                           <div class="form-group">
                               <label>Family Code</label>
@@ -87,7 +80,7 @@
 
                           <div class="form-group">
                               <label>Street Name</label>
-                              <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}">
+                              <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}" id="address_street">
                           </div><!-- end form-group -->
 
                           <div class="form-group">
@@ -101,11 +94,14 @@
                               <div class="clearfix">
                               </div>
 
-                              <div class="col-md-6">
-                                <input type="text" class="form-control" name="address_unit1" value="{{ old('address_unit1') }}">
+                              <div style='width:30;float:left;'>
+                                <input type="text" class="form-control" name="address_unit1" value="{{ old('address_unit1') }}" maxlength="3">
                               </div>
-                              <div class="col-md-6">
-                                <input type="text" class="form-control" name="address_unit2" value="{{ old('address_unit2') }}">
+
+                              <label style='width:7;float:left;' class="separator">-</label>
+
+                              <div style='width:40;float:left;'>
+                                <input type="text" class="form-control" name="address_unit2" value="{{ old('address_unit2') }}" maxlength="3">
                               </div>
 
                               <div class="clearfix">
@@ -150,37 +146,78 @@
             <div class="row" id="has_session">
 
                 <div class="col-md-12">
-                    <h4>Focus Devotee 焦点善信</h4>
+                    <h4>Focus Devotee 焦点主家</h4>
                 </div><!-- end col-md-12 -->
 
                 <div class="col-md-12">
 
-                    <div class="row form-horizontal">
+                    <div class="row">
+
+
+                      <div class="col-md-6">
+
+                          <div class="form-group">
+                              <label class="col-md-12">NRIC No: <br />
+
+                                  <span id="nric">{{ $focus_devotee[0]->nric }}</span>
+
+                              </label>
+                          </div><!-- end form-group -->
+
+
+
+                      </div><!-- end col-md-6 -->
 
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label class="col-md-12">Devotee ID : <span id="devodee_id">{{ $focus_devotee[0]->devotee_id }}</span></label>
+                                <label class="col-md-12">Devotee ID : <br />
+                                  @if(isset($focus_devotee[0]->specialremarks_id))
+                                    <span id="devodee_id" class="text-danger">{{ $focus_devotee[0]->devotee_id }}</span>
+                                  @else
+                                    <span id="devodee_id">{{ $focus_devotee[0]->devotee_id }}</span>
+                                  @endif
+                                </label>
                             </div><!-- end form-group -->
 
-                            <div class="form-group">
-                                <label class="col-md-12">Member ID : <span id="member_id">{{ $focus_devotee[0]->member_id }}</span></label>
-                            </div><!-- end form-group -->
+
 
                         </div><!-- end col-md-6 -->
 
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label class="col-md-12">Family Code : <span id="family_code">{{ $focus_devotee[0]->familycode }}</span></label>
+                                <label class="col-md-12">Family Code : <br />
+                                  <span id="family_code">{{ $focus_devotee[0]->familycode }}</span>
+                                </label>
                             </div><!-- end form-group -->
 
-                            <div class="form-group">
-                                <label class="col-md-12">Bridging ID : <span id="bridging_id">0</span></label>
-                            </div><!-- end form-group -->
+
 
                         </div><!-- end col-md-6 -->
                     </div><!-- end row -->
+
+                    <div class="clearfix">
+                    </div><!-- end clearfix -->
+
+                    @if(Session::has('focusdevotee_specialremarks'))
+
+                    @php $focusdevotee_specialremarks = Session::get('focusdevotee_specialremarks');
+                    @endphp
+
+                      @if($focusdevotee_specialremarks[0]->specialremarks_id != null)
+
+                        <div class="form-group">
+                          <label class="col-md-12"><b>Special Remarks</b></label>
+
+                          @foreach($focusdevotee_specialremarks as $specialremark)
+                          <span class="text-danger" style="display: block; margin-bottom: 10px;">{{ $specialremark->data }}</span>
+                          @endforeach
+                        </div><!-- end col-md-12 -->
+
+                      @endif
+
+                    @endif
 
                 </div><!-- end col-md-12 -->
 
@@ -221,13 +258,6 @@
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
 
-                    <div class="form-group">
-                        <label class="col-md-4">Guiyi Name</label>
-
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="guiyi_name" id="guiyi_name" value="{{ $focus_devotee[0]->guiyi_name }}">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
 
                     <div class="form-group">
                         <label class="col-md-4">Contact #</label>
@@ -241,7 +271,7 @@
                         <label class="col-md-4">Addr - House No</label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="address_houseno" id="address_houseno" value="{{ $focus_devotee[0]->address_houseno }}">
+                            <input type="text" class="form-control" name="address_houseno" id="focus_address_houseno" value="{{ $focus_devotee[0]->address_houseno }}">
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
 
@@ -249,7 +279,7 @@
                         <label class="col-md-4">Addr - Street</label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="address_street" id="address_street"
+                            <input type="text" class="form-control" name="address_street" id="focus_address_street"
                                 value="{{ $focus_devotee[0]->address_street }}">
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
@@ -258,7 +288,7 @@
                         <label class="col-md-4">Addr - Unit</label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="adress_unit" id="address_unit1"
+                            <input type="text" class="form-control" name="adress_unit" id="focus_address_unit"
                                 value="{{ $focus_devotee[0]->address_unit1 }} - {{ $focus_devotee[0]->address_unit2 }}">
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
@@ -267,28 +297,23 @@
                         <label class="col-md-4">Addr - Postal</label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="address_postal" id="address_postal"
+                            <input type="text" class="form-control" name="address_postal" id="focus_address_postal"
                                 value="{{ $focus_devotee[0]->address_postal }}">
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
 
                     <div class="form-group">
-                        <label class="col-md-4">Other Addr - Chinese</label>
+                        <label class="col-md-4"></label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="oversea_addr_in_chinese" id="oversea_addr_in_chinese"
-                                value="{{ $focus_devotee[0]->oversea_addr_in_chinese }}">
+                            <input type="hidden" class="form-control" name="" id="focus_address_translate"
+                                value="{{ $focus_devotee[0]->address_translated }}">
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
 
-                    <div class="form-group">
-                        <label class="col-md-4">Nationality</label>
 
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="nationality" id="nationality"
-                                value="{{ $focus_devotee[0]->nationality }}">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
+
+
 
                     <div class="form-group">
                         <label class="col-md-4">Deceased</label>
@@ -317,49 +342,9 @@
                         </div><!-- end col-md-8 -->
                     </div><!-- end form-group -->
 
-                    <div class="form-group">
-                        <label class="col-md-4">Dialect</label>
 
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="dialect" id="dialect"
-                                value="{{ $focus_devotee[0]->dialect }}">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
 
-                    <div class="form-group">
-                        <label class="col-md-4">Introduced By - 1</label>
 
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="introduced_by1" id="introduced_by1"
-                                value="{{ $focus_devotee[0]->introduced_by1 }}">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
-
-                    <div class="form-group">
-                        <label class="col-md-4">Introduced By - 2</label>
-
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="introduced_by2" id="introduced_by2"
-                                value="{{ $focus_devotee[0]->introduced_by2 }}">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
-
-                    <div class="form-group">
-                        <label class="col-md-4">Approval Date</label>
-
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="approved_date" id="approved_date"
-                                value="{{ $focus_devotee[0]->approved_date }}">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
-
-                    <div class="form-group">
-                        <label class="col-md-4">Mailer (Y/N)</label>
-
-                        <div class="col-md-8">
-                            <input type="text" class="form-control">
-                        </div><!-- end col-md-8 -->
-                    </div><!-- end form-group -->
 
                 </div><!-- end col-md-12 -->
             </div><!-- end row -->
@@ -371,7 +356,7 @@
         <div class="row" id="no_session">
 
             <div class="col-md-12">
-                <h4>Focus Devotee 焦点善信</h4>
+                <h4>Focus Devotee 焦点主家</h4>
             </div><!-- end col-md-12 -->
 
         </div><!-- end row -->
@@ -395,24 +380,24 @@
 
                   <div class="col-md-9">
                       <div class="form-group">
-                          <label>Name (in Chinese)</label>
+                          <label>Chinese Name</label>
                           <input type="text" class="form-control" name="chinese_name" value="{{ old('chinese_name') }}">
                       </div><!-- end form-group -->
 
                       <div class="form-group">
+                          <label>English Name</label>
+                          <input type="text" class="form-control" name="english_name" value="{{ old('english_name') }}">
+                      </div><!-- end form-group -->
+
+
+
+
+                      <div class="form-group">
                           <label>Devotee ID</label>
-                          <input type="text" class="form-control" name="devotee_id" value="{{ old('devotee_id') }}">
+                          <input type="number" class="form-control" name="devotee_id" value="{{ old('devotee_id') }}" min="1">
                       </div><!-- end form-group -->
 
-                      <div class="form-group">
-                          <label>Member ID</label>
-                          <input type="text" class="form-control" name="member_id" value="{{ old('member_id') }}">
-                      </div><!-- end form-group -->
 
-                      <div class="form-group">
-                          <label>Bridging ID</label>
-                          <input type="text" class="form-control" name="bridging_id" value="{{ old('bridging_id') }}">
-                      </div><!-- end form-group -->
 
                       <div class="form-group">
                           <label>Family Code</label>
@@ -443,7 +428,7 @@
 
                       <div class="form-group">
                           <label>Street Name</label>
-                          <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}">
+                          <input type="text" class="form-control" name="address_street" value="{{ old('address_street') }}" id="address_street">
                       </div><!-- end form-group -->
 
                       <div class="form-group">
@@ -457,11 +442,14 @@
                           <div class="clearfix">
                           </div>
 
-                          <div class="col-md-6">
-                            <input type="text" class="form-control" name="address_unit1" value="{{ old('address_unit1') }}">
+                          <div style='width:30%;float:left;'>
+                            <input type="text" class="form-control" name="address_unit1" value="{{ old('address_unit1') }}" maxlength="3">
                           </div>
-                          <div class="col-md-6">
-                            <input type="text" class="form-control" name="address_unit2" value="{{ old('address_unit2') }}">
+
+                          <label style='width:7%;float:left;' class="separator">-</label>
+
+                          <div style='width:40%;float:left;'>
+                            <input type="text" class="form-control" name="address_unit2" value="{{ old('address_unit2') }}" maxlength="3">
                           </div>
 
                           <div class="clearfix">
@@ -493,7 +481,7 @@
 
                       <div class="form-group">
                           <label>Phone No</label>
-                          <input type="text" class="form-control" name="contact" value="{{ old('contact') }}">
+                          <input type="text" class="form-control" name="contact" value="{{ old('contact') }}" id="phone_no">
                       </div><!-- end form-group -->
 
                   </div><!-- end col-md-9 -->
@@ -503,16 +491,39 @@
 
         @endif
 
+        <div class="col-md-12" style="margin-bottom: 10px;">
+
+          <div class="form-group" style="margin:0 auto;">
+           <button type="button" class="btn default" id="new_same_familycode"> New Devotee with same FC
+           </button>
+          </div><!-- end form-group -->
+
+        </div><!-- end col-md-12 -->
+
         <div class="col-md-6">
 
           <div class="form-group pull-right">
-           <button type="submit" class="btn default" style="margin-right: 25px; width:100px;" id="quick_search"> Search
+           <button type="button" class="btn default" style="margin-right: 25px; width:100px;" id="new"> New
+           </button>
+          </div><!-- end form-group -->
+
+        </div><!-- end col-md-6 -->
+
+        <div class="col-md-6">
+
+          <div class="form-group pull-right">
+           <button type="submit" class="btn default" id="quick_search" style="width: 110px;"> Quick Search
            </button>
           </div><!-- end form-group -->
 
         </div><!-- end col-md-6 -->
 
         </form>
+
+        <div class="clearfix"></div><!-- end clearfix -->
+
+        <div class="col-md-6">
+        </div><!-- end col-md-6 -->
 
         <div class="col-md-6">
 
@@ -522,7 +533,7 @@
               {!! csrf_field() !!}
 
           <div class="form-group pull-right">
-              <button type="submit" class="btn default" id="new_search" style="width: 100px;">Reset</button>
+              <button type="submit" class="btn default" id="new_search" style="width: 110px;">New Search</button>
           </div>
 
           </form>

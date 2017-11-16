@@ -167,10 +167,14 @@ class MediaWikiZhConverter {
 
             /* Switch for PHP4 and PHP5 version of MediaWiki */
             if (file_exists( MEDIAWIKI_PATH . "languages/LanguageZh.php")) {
+				require_once "languages/Language.php";
+				require_once "languages/Name.php";
                 require_once "languages/LanguageZh.php";
+                require_once "includes/utils/replacementArray.php";
             } else {
+				require_once "languages/Language.php";
                 require_once "languages/classes/LanguageZh.php";
-                //require_once "includes/libs/StringUtils.php";
+                require_once "includes/utils/replacementArray.php";
             }
 
             $instance = new MediaWikiZhConverter();

@@ -74,85 +74,57 @@
 
                                     <div class="portlet-body form">
 
-                                        <form method="post" action="{{ URL::to('/admin/change-account') }}">
+                                        <form method="post" action="{{ URL::to('/admin/change-otheroption') }}">
                                             {!! csrf_field() !!}
 
-                                            <div class="form-body">
+																						<div class="form-body">
+																							<div class="form-group">
+																									<input type="hidden" class="form-control" name="option_id"
+																											value="{{ $option->id }}">
 
-                                                <div class="form-group">
-                                                    <input type="hidden" class="form-control" name="staff_id"
-                                                        value="{{ $staff->staff_id }}">
+																							</div><!-- end form-group -->
 
-                                                </div><!-- end form-group -->
+																								<div class="form-group">
+																										<label>Name</label>
 
-                                                <div class="form-group">
-                                                    <label>Name</label>
+																										<div class="input-group">
+																												<span class="input-group-addon">
+																														<i class="fa fa-word"></i>
+																												</span>
 
-                                                    <input type="text" class="form-control" name="first_name"
-                                                        value="{{ $staff->first_name }}">
+																												<input type="text" class="form-control" placeholder="Name" name="name"
+																												value="{{ $option->name }}">
+																										</div><!-- end input-group -->
 
-                                                </div><!-- end form-group -->
+																								</div><!-- end form-group -->
 
-                                                <div class="form-group">
-                                                    <label>Last Name</label>
+																								<div class="form-group">
+																										<label>Description</label>
 
-                                                    <input type="text" class="form-control" name="last_name"
-                                                        value="{{ $staff->last_name }}">
+																										<div class="input-group">
+																												<span class="input-group-addon">
+																														<i class="fa fa-word"></i>
+																												</span>
 
-                                                </div><!-- end form-group -->
+																												<input type="text" class="form-control" placeholder="Description" name="description"
+																													value="{{ $option->description }}">
+																										</div><!-- end input-group -->
 
-                                                <div class="form-group">
-                                                    <label>User Name</label>
+																								</div><!-- end form-group -->
 
-                                                    <input type="text" class="form-control" name="user_name"
-                                                            value="{{ $staff->user_name }}">
+																								<div class="form-group">
+																										<label>Price</label>
 
-                                                </div><!-- end form-group -->
+																										<div class="input-group">
+																												<span class="input-group-addon">
+																														<i class="fa fa-money"></i>
+																												</span>
 
-                                                <div class="form-group">
-                                                    <label>Password</label>
+																												<input type="text" class="form-control" placeholder="Price" name="price"
+																													value="{{ $option->price }}">
+																										</div><!-- end input-group -->
 
-                                                    <input type="password" class="form-control" name="password">
-
-                                                </div><!-- end form-group -->
-
-                                                <div class="form-group">
-                                                    <label>Confirm Password</label>
-
-                                                    <input type="password" class="form-control" name="confirm_password">
-
-                                                </div><!-- end form-group -->
-
-                                                <div class="form-group">
-                                                    <label>Role</label>
-
-                                                    <div class="mt-radio-inline">
-
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="role" value="2" <?php if ($staff->role == 2){ ?>checked="checked"<?php }?>> Admin
-                                                            <span></span>
-                                                        </label>
-
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="role" value="3" <?php if ($staff->role == 3){ ?>checked="checked"<?php }?>> Supervisor
-                                                            <span></span>
-                                                        </label>
-
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="role" value="4" <?php if ($staff->role == 4){ ?>checked="checked"<?php }?>> Account Officer
-                                                            <span></span>
-                                                        </label>
-
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="role" value="5" <?php if ($staff->role == 5){ ?>checked="checked"<?php }?>> Operator
-                                                            <span></span>
-                                                        </label>
-
-                                                    </div><!-- end mt-radio-inline -->
-
-                                                </div><!-- end form-group -->
-
-                                            </div><!-- end form-body -->
+																								</div><!-- end form-group -->
 
                                             <div class="form-actions">
                                                 <button type="submit" class="btn blue">Update</button>

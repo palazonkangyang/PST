@@ -1,8 +1,8 @@
 
-                    
+
                 <div class="page-footer">
-              
-                    <div class="container">  <?php echo date('Y'); ?> © 廣惠肇碧山亭 Kwong Wai Siew Peck San Theng. ALL RIGHTS RESERVED
+
+                  <div class="container">  <?php echo date('Y'); ?> © 廣惠肇碧山亭 Kwong Wai Siew Peck San Theng. ALL RIGHTS RESERVED
                     </div>
                 </div>
 

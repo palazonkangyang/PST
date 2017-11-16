@@ -22,5 +22,6 @@ class Shengzhupai extends Model
         'updated_at',
         'focusdevotee_id',
          'slot_id',
+         'otheroption_text'
     ];
 }

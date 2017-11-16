@@ -2,6 +2,30 @@
 
 @section('main-content')
 
+@php
+		$xianyou_same_family = Session::get('xianyou_same_family');
+		$xianyou_same_focusdevotee = Session::get('xianyou_same_focusdevotee');
+		$xianyou_different_family = Session::get('xianyou_different_family');
+		$ciji_same_family = Session::get('ciji_same_family');
+		$ciji_same_focusdevotee = Session::get('ciji_same_focusdevotee');
+		$ciji_different_family = Session::get('ciji_different_family');
+		$yuejuan_same_family = Session::get('yuejuan_same_family');
+		$yuejuan_same_focusdevotee = Session::get('yuejuan_same_focusdevotee');
+		$yuejuan_different_family = Session::get('yuejuan_different_family');
+		$focusdevotee_amount = Session::get('focusdevotee_amount');
+		$samefamily_amount = Session::get('samefamily_amount');
+		$differentfamily_amount = Session::get('differentfamily_amount');
+
+		$cancellation_focusdevotee = Session::get('cancellation_focusdevotee_xiangyou');
+		$cancellation_sameaddr_xiangyou = Session::get('cancellation_sameaddr_xiangyou');
+		$cancellation_differentaddr_xiangyou = Session::get('cancellation_differentaddr_xiangyou');
+		$focus_devotee = Session::get('focus_devotee');
+		$date = \Carbon\Carbon::now()->subDays(365);
+		$now = \Carbon\Carbon::now();
+
+@endphp
+
+
 	<div class="page-container-fluid">
 
 		<div class="page-content-wrapper">
@@ -26,7 +50,7 @@
 
             		<ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="/operator/index">Home</a>
+                            <a href="/operator/index" class="hylink">Home</a>
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
@@ -76,20 +100,29 @@
                                             	<div class="tabbable-bordered">
 
                                             		<ul class="nav nav-tabs">
-                                                        <li class="active">
-                                                            <a href="#tab_xiangyou" data-toggle="tab">Xiangyou <br>香油</a>
-                                                        </li>
+                                                  <li class="active">
+                                                    <a href="#tab_xiangyou" data-toggle="tab">Xiangyou <br>香油</a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="#tab_ciji" data-toggle="tab">Ciji <br> 慈济</a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="#tab_yuejuan" data-toggle="tab">Yuejuan <br> 月捐 </a>
+                                                  </li>
+                                                  <li class="disabled">
+                                                    <a href="#tab_others" data-toggle="tab">Others <br> 其他 </a>
+                                                  </li>
 
-                                                        <li class="disabled">
-                                                            <a href="#tab_ciji" data-toggle="tab">Ciji <br> 慈济</a>
-                                                        </li>
-                                                        <li class="disabled">
-                                                            <a href="#tab_yuejuan" data-toggle="tab">Yuejuan <br> 月捐 </a>
-                                                        </li>
-                                                         <li class="disabled">
-                                                            <a href="#tab_others" data-toggle="tab">Others <br> 其他 </a>
-                                                        </li>
-                                                    </ul>
+																									<li class="pull-right">
+                                                    <a href="#tab_transactiondetail" data-toggle="tab">Transaction <br> 交易详情</a>
+                                                  </li>
+																									<li class="pull-right">
+                                                    <a href="#tab_relative_friends" data-toggle="tab">Relative & Friends <br> 亲戚朋友</a>
+                                                  </li>
+																									<li class="pull-right">
+                                                    <a href="#tab_samefamily" data-toggle="tab">Same Family Code <br> 同址主家</a>
+                                                  </li>
+                                                </ul>
 
                                                     <div class="tab-content">
 
@@ -97,129 +130,193 @@
 
                                                     		<div class="form-body">
 
-                                                    			<form method="post" action="{{ URL::to('/staff/donation') }}"
-                                                    				class="form-horizontal form-bordered" id="donationform">
+                                                    			<form target="_blank" method="post" action="{{ URL::to('/staff/donation') }}"
+                                                    				class="form-horizontal form-bordered" id="donation-form">
 
                                                     				{!! csrf_field() !!}
 
                                                     			<div class="form-group">
 
-                                                    				<h4>Same address Devotee 同址善信</h4>
+                                                    				<h4>Same Family Code 同址主家</h4>
 
                                                                     <table class="table table-bordered" id="generaldonation_table">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Chinese Name</th>
                                                                                 <th>Devotee#</th>
-                                                                                <th>Block</th>
+																																								<th>Member#</th>
                                                                                 <th>Address</th>
-                                                                                <th>Unit</th>
                                                                                 <th>Guiyi Name</th>
-                                                                                <th>Amount</th>
-                                                                                <th>Pay Till</th>
-                                                                                <th>HJ/ GR</th>
-                                                                                <th>Display</th>
+                                                                                <th width="80px">Amount</th>
+                                                                                <th width="80px">Paid Till</th>
+                                                                                <th width="100px">HJ/ GR</th>
+                                                                                <th width="80px">Display</th>
                                                                                 <th>XYReceipt</th>
                                                                                 <th>Trans Date</th>
                                                                             </tr>
                                                                         </thead>
 
-                                                                        @if(Session::has('devotee_lists'))
-
-                                                                            @php
-
-                                                                                $devotee_lists = Session::get('devotee_lists');
-                                                                                $focus_devotee = Session::get('focus_devotee');
-
-                                                                            @endphp
+                                                                        @if(count($xianyou_same_focusdevotee) > 0 || count($xianyou_same_family) > 0)
 
                                                                         <tbody id="has_session">
 
+																																					@if(count($xianyou_same_focusdevotee) > 0)
+
+																													                <tr>
+																													                  <td>
+																													                    @if($xianyou_same_focusdevotee[0]->deceased_year != null)
+																													                    <span class="text-danger">{{ $xianyou_same_focusdevotee[0]->chinese_name }}</span>
+																													                    @else
+																													                    <span>{{ $xianyou_same_focusdevotee[0]->chinese_name }}</span>
+																													                    @endif
+																													                  </td>
+																													                  <td>
+																													                    @if($xianyou_same_focusdevotee[0]->specialremarks_devotee_id == null)
+																													                    <span id="devotee">{{ $xianyou_same_focusdevotee[0]->devotee_id }}</span>
+																													                    @else
+																													                    <span class="text-danger" id="devotee">{{ $xianyou_same_focusdevotee[0]->devotee_id }}</span>
+																													                    @endif
+																													                    <input type="hidden" name="devotee_id[]" value="{{ $xianyou_same_focusdevotee[0]->devotee_id }}">
+																													                  </td>
+																													                  <td>
+																													                    @if(\Carbon\Carbon::parse($xianyou_same_focusdevotee[0]->lasttransaction_at)->lt($date))
+																													                    <span style="color: #a5a5a5">{{ $xianyou_same_focusdevotee[0]->member }}</span>
+																													                    @else
+																													                    <span>{{ $xianyou_same_focusdevotee[0]->member }}</span>
+																													                    @endif
+																													                  </td>
+																													                  <td>
+																													                    @if(isset($xianyou_same_focusdevotee[0]->oversea_addr_in_chinese))
+																													                      {{ $xianyou_same_focusdevotee[0]->oversea_addr_in_chinese }}
+																													                    @elseif(isset($xianyou_same_focusdevotee[0]->address_unit1) && isset($xianyou_same_focusdevotee[0]->address_unit2))
+																													                      {{ $xianyou_same_focusdevotee[0]->address_houseno }}, #{{ $xianyou_same_focusdevotee[0]->address_unit1 }}-{{ $xianyou_same_focusdevotee[0]->address_unit2 }}, {{ $xianyou_same_focusdevotee[0]->address_street }}, {{ $xianyou_same_focusdevotee[0]->address_postal }}
+																													                    @else
+																													                      {{ $xianyou_same_focusdevotee[0]->address_houseno }}, {{ $xianyou_same_focusdevotee[0]->address_street }}, {{ $xianyou_same_focusdevotee[0]->address_postal }}
+																													                    @endif
+																													                  </td>
+																													                  <td>{{ $xianyou_same_focusdevotee[0]->guiyi_name }}</td>
+																													                  <td width="80px" class="amount-col">
+																													                    <input type="text" class="form-control amount" name="amount[]">
+																													                  </td>
+																													                  <td width="80px">
+																													                    @if(isset($xs_family->paytill_date) && \Carbon\Carbon::parse($xianyou_same_focusdevotee[0]->paytill_date)->lt($now))
+																													                    <span class="text-danger">{{ \Carbon\Carbon::parse($xianyou_same_focusdevotee[0]->paytill_date)->format("d/m/Y") }}</span>
+																													                    @elseif(isset($xianyou_same_focusdevotee[0]->paytill_date))
+																													                    <span>{{ \Carbon\Carbon::parse($xianyou_same_focusdevotee[0]->paytill_date)->format("d/m/Y") }}</span>
+																													                    @else
+																													                    <span>{{ $xianyou_same_focusdevotee[0]->paytill_date }}</span>
+																													                    @endif
+																													                  </td>
+																													                  <td width="100px">
+																													                    <select class="form-control hjgr" name="hjgr_arr[]">
+																													                          <option value="hj">合家</option>
+																													                          <option value="gr">个人</option>
+																													                      </select>
+																													                  </td>
+																													                  <td width="80px">
+																													                    <select class="form-control display" name="">
+																													                      <option value="N">N</option>
+																													                      <option value="Y">Y</option>
+																													                    </select>
+																																							<input type="hidden" name="display[]" class="display-hidden" value="">
+																													                  </td>
+																													                  <td>{{ $xianyou_same_focusdevotee[0]->xyreceipt }}</td>
+																													                  <td>
+																																							@if(isset($xianyou_same_focusdevotee[0]->lasttransaction_at))
+																																							<span>{{ \Carbon\Carbon::parse($xianyou_same_focusdevotee[0]->lasttransaction_at)->format("d/m/Y") }}</span>
+																																							@else
+																																							<span>{{ $xianyou_same_focusdevotee[0]->lasttransaction_at }}</span>
+																																							@endif
+																																						</td>
+																													                </tr>
+
+																													                @endif
+
+                                                                            @if(count($xianyou_same_family) > 0)
+
+																																						@foreach($xianyou_same_family as $xs_family)
+
                                                                             <tr>
-                                                                            	<td>{{ $focus_devotee[0]->chinese_name }}</td>
                                                                             	<td>
-                                                                            		{{ $focus_devotee[0]->devotee_id }}
-                                                                            		<input type="hidden" name="devotee_id[]"
-	                                                    								value="{{ $focus_devotee[0]->devotee_id }}">
-                                                                            	</td>
-                                                                            	<td>{{ $focus_devotee[0]->address_building }}</td>
-                                                                            	<td>{{ $focus_devotee[0]->address_street }}</td>
+																																								@if($xs_family->deceased_year != null)
+																																								<span class="text-danger">{{ $xs_family->chinese_name }}</span>
+																																								@else
+																																								<span>{{ $xs_family->chinese_name }}</span>
+																																								@endif
+																																							</td>
                                                                             	<td>
-                                                                            		{{ $focus_devotee[0]->address_unit1 }}
-                                                                            		{{ $focus_devotee[0]->address_unit2 }}
+																																								@if($xs_family->specialremarks_devotee_id == null)
+																																								<span id="devotee">{{ $xs_family->devotee_id }}</span>
+																																								@else
+																																								<span class="text-danger" id="devotee">{{ $xs_family->devotee_id }}</span>
+																																								@endif
+                                                                            		<input type="hidden" name="devotee_id[]" value="{{ $xs_family->devotee_id }}">
                                                                             	</td>
-                                                                            	<td>{{ $focus_devotee[0]->guiyi_name }}</td>
-                                                                            	<td width="100px">
+																																							<td>
+																																								@if(\Carbon\Carbon::parse($xs_family->lasttransaction_at)->lt($date))
+																																								<span style="color: #a5a5a5">{{ $xs_family->member }}</span>
+																																								@else
+																																								<span>{{ $xs_family->member }}</span>
+																																								@endif
+																																							</td>
+                                                                            	<td>
+																																								@if(isset($xs_family->oversea_addr_in_chinese))
+																																									{{ $xs_family->oversea_addr_in_chinese }}
+																																								@elseif(isset($xs_family->address_unit1) && isset($xs_family->address_unit2))
+																																									{{ $xs_family->address_houseno }}, #{{ $xs_family->address_unit1 }}-{{ $xs_family->address_unit2 }}, {{ $xs_family->address_street }}, {{ $xs_family->address_postal }}
+																																								@else
+																																									{{ $xs_family->address_houseno }}, {{ $xs_family->address_street }}, {{ $xs_family->address_postal }}
+																																								@endif
+																																							</td>
+                                                                            	<td>{{ $xs_family->guiyi_name }}</td>
+                                                                            	<td width="80px" class="amount-col">
                                                                             		<input type="text" class="form-control amount" name="amount[]">
                                                                             	</td>
-                                                                            	<td width="120px">
-                                                                            		<input type="text" class="form-control paid_till"
-                                                                            			name="paid_till[]" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-                                                                            	</td>
-                                                                            	<td width="120px">
-                                                                            		<select class="form-control" name="hjgr_arr[]">
-	                                                                                    <option value="hj">hj</option>
-	                                                                                    <option value="gr">gr</option>
-	                                                                                </select>
-                                                                            	</td>
                                                                             	<td width="80px">
-                                                                            		<select class="form-control" name="display[]">
-	                                                                                    <option value="Y">Y</option>
-	                                                                                    <option value="N">N</option>
-	                                                                                </select>
-                                                                            	</td>
-                                                                            	<td></td>
-                                                                            	<td></td>
-                                                                            </tr>
-
-                                                                            @foreach($devotee_lists as $devotee)
-
-                                                                            <tr>
-                                                                            	<td>{{ $devotee->chinese_name }}</td>
-                                                                            	<td>
-                                                                            		{{ $devotee->devotee_id }}
-                                                                            		<input type="hidden" name="devotee_id[]"
-                                                                            		value="{{ $devotee->devotee_id }}">
-                                                                            	</td>
-                                                                            	<td>{{ $devotee->address_building }}</td>
-                                                                            	<td>{{ $devotee->address_street }}</td>
-                                                                            	<td>{{ $devotee->address_unit1 }} {{ $devotee->address_unit2 }}
-                                                                            	</td>
-                                                                            	<td>{{ $devotee->guiyi_name }}</td>
-                                                                            	<td width="100px" class="amount-col">
-                                                                            		<input type="text" class="form-control amount" name="amount[]">
-                                                                            	</td>
-                                                                            	<td width="120px">
-                                                                            		<input type="text" class="form-control paid_till"
-                                                                            			name="paid_till[]" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+																																								@if(isset($xs_family->paytill_date) && \Carbon\Carbon::parse($xs_family->paytill_date)->lt($now))
+																																								<span class="text-danger">{{ \Carbon\Carbon::parse($xs_family->paytill_date)->format("d/m/Y") }}</span>
+																																								@elseif(isset($xs_family->paytill_date))
+																																								<span>{{ \Carbon\Carbon::parse($xs_family->paytill_date)->format("d/m/Y") }}</span>
+																																								@else
+																																								<span>{{ $xs_family->paytill_date }}</span>
+																																								@endif
                                                                             	</td>
                                                                             	<td width="100px">
-                                                                            		<select class="form-control" name="hjgr_arr[]">
-	                                                                                    <option value="hj">hj</option>
-	                                                                                    <option value="gr">gr</option>
-	                                                                                </select>
+                                                                            		<select class="form-control hjgr" name="hjgr_arr[]">
+	                                                                                <option value="hj">合家</option>
+	                                                                              	<option value="gr">个人</option>
+	                                                                              </select>
                                                                             	</td>
                                                                             	<td width="80px">
-                                                                            		<select class="form-control" name="display[]">
-	                                                                                    <option value="Y">Y</option>
-	                                                                                    <option value="N">N</option>
-	                                                                                </select>
+                                                                            		<select class="form-control display" name="display[]">
+																																									<option value="N">N</option>
+																																									<option value="Y">Y</option>
+	                                                                              </select>
+																																								<input type="hidden" name="display[]" class="display-hidden" value="">
                                                                             	</td>
-                                                                            	<td></td>
-                                                                            	<td></td>
+                                                                            	<td>{{ $xs_family->xyreceipt }}</td>
+                                                                            	<td>
+																																								@if(isset($xs_family->lasttransaction_at))
+																																								<span>{{ \Carbon\Carbon::parse($xs_family->lasttransaction_at)->format("d/m/Y") }}</span>
+																																								@else
+																																								<span>{{ $xs_family->lasttransaction_at }}</span>
+																																								@endif
+																																							</td>
                                                                             </tr>
 
                                                                             @endforeach
+
+																																						@endif
 
                                                                         </tbody>
 
                                                                         @else
 
-                                                                            <tbody id="no_session">
-                                                                                <tr>
-	                                                                            	<td colspan="12">No Data</td>
-	                                                                            </tr>
-                                                                            </tbody>
+                                                                        <tbody id="no_session">
+                                                                          <tr>
+	                                                                          <td colspan="12">No Result Found</td>
+	                                                                        </tr>
+                                                                        </tbody>
 
                                                                         @endif
 
@@ -228,107 +325,113 @@
                                                                 </div><!-- end form-group -->
 
                                                                 <div class="form-group">
-
-                                                    				<h4>Relatives and friends 亲戚朋友</h4>
-
-                                                                </div><!-- end form-group -->
-
-                                                                <div class="form-group">
-
-                                                                    <div class="col-md-12">
-
-                                                                        <div class="col-md-6">
-                                                                            <label class="col-md-2">Devotee ID</label>
-
-                                                                            <div class="col-md-5">
-                                                                                <input type="text" class="form-control" id="search_devotee">
-                                                                            </div><!-- end col-md-5 -->
-
-                                                                            <div class="col-md-3">
-                                                                                <button type="button" class="btn default" id="search_devotee_btn">
-                                                                                    Search Devotee
-                                                                                </button>
-                                                                            </div><!-- end-com-md-3 -->
-                                                                        </div><!-- end col-md-6 -->
-
-                                                                        <div class="col-md-6"></div><!-- end col-md-6 -->
-
-                                                                    </div><!-- end col-md-12 -->
-
+                                                    							<h4>Relatives and friends 亲戚朋友</h4>
                                                                 </div><!-- end form-group -->
 
                                                                 <div class="form-group">
 
                                                                     <table class="table table-bordered" id="generaldonation_table2">
                                                                         <thead>
-                                                                            <tr>
-																																								<th>#</th>
-                                                                                <th>Chinese Name</th>
-                                                                                <th>Devotee#</th>
-                                                                                <th>Block</th>
-                                                                                <th>Address</th>
-                                                                                <th>Unit</th>
-                                                                                <th>Guiyi Name</th>
-                                                                                <th width="100px">Amount</th>
-                                                                                <th width="120px">Pay Till</th>
-                                                                                <th width="100px">HJ/ GR</th>
-                                                                                <th width="80px">Display</th>
-                                                                                <th>XYReceipt</th>
-                                                                                <th>Trans Date</th>
-                                                                            </tr>
+                                                                          <tr>
+                                                                            <th>Chinese Name</th>
+                                                                            <th>Devotee#</th>
+																																						<th>Member#</th>
+                                                                            <th>Address</th>
+                                                                        		<th>Guiyi Name</th>
+                                                                            <th width="80px">Amount</th>
+                                                                            <th width="80px">Paid Till</th>
+                                                                            <th width="100px">HJ/ GR</th>
+                                                                            <th width="80px">Display</th>
+                                                                            <th>XYReceipt</th>
+                                                                            <th>Trans Date</th>
+                                                                          </tr>
                                                                         </thead>
 
-																																				@if(Session::has('relative_friend_lists'))
-
-																																				@php $relative_friend_lists = Session::get('relative_friend_lists'); @endphp
+																																				@if(count($xianyou_different_family) > 0)
 
 																																				<tbody id="appendDevoteeLists">
 
-                                                                        @foreach($relative_friend_lists as $list)
+																																					@foreach($xianyou_different_family as $list)
 
                                                                             <tr>
-																																							<td></td>
-                                                                            	<td>{{ $list->chinese_name }}</td>
-																																							<td>{{ $list->relative_friend_devotee_id }}
-																																							<input type="hidden" name="other_devotee_id[]"
-																																							value="{{ $list->relative_friend_devotee_id }}"></td>
-																																							<td>{{ isset($list->address_building) ? $list->address_building : '-' }}</td>
-																																							<td>{{ $list->address_street }}</td>
-																																							<td>{{ $list->address_unit1 }} {{ $list->address_unit2 }}</td>
+                                                                            	<td>
+																																								@if($list->deceased_year != null)
+																																								<span class="text-danger">{{ $list->chinese_name }}</span>
+																																								@else
+																																								<span>{{ $list->chinese_name }}</span>
+																																								@endif
+																																							</td>
+																																							<td>
+																																								@if($list->specialremarks_devotee_id == null)
+																																								<span id="devotee">{{ $list->devotee_id }}</span>
+																																								@else
+																																								<span class="text-danger" id="devotee">{{ $list->devotee_id }}</span>
+																																								@endif
+																																							<input type="hidden" name="other_devotee_id[]" value="{{ $list->devotee_id }}">
+																																							</td>
+																																							<td>
+																																								@if(\Carbon\Carbon::parse($list->lasttransaction_at)->lt($date))
+																																								<span style="color: #a5a5a5">{{ $list->member }}</span>
+																																								@else
+																																								<span>{{ $list->member }}</span>
+																																								@endif
+																																							</td>
+																																							<td>
+																																								@if(isset($list->oversea_addr_in_chinese))
+																																									{{ $list->oversea_addr_in_chinese }}
+																																								@elseif(isset($list->address_unit1) && isset($list->address_unit2))
+																																									{{ $list->address_houseno }}, #{{ $list->address_unit1 }}-{{ $list->address_unit2 }}, {{ $list->address_street }}, {{ $list->address_postal }}
+																																								@else
+																																									{{ $list->address_houseno }}, {{ $list->address_street }}, {{ $list->address_postal }}
+																																								@endif
+																																							</td>
 																																							<td>{{ $list->guiyi_name }}</td>
 																																							<td class="amount-col">
                                                                             		<input type="text" class="form-control amount other_amount" name="other_amount[]">
                                                                             	</td>
                                                                             	<td>
-                                                                            		<input type="text" class="form-control paid_till other_paid_till"
-                                                                            			name="other_paid_till[]" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+																																								@if(isset($list->paytill_date) && \Carbon\Carbon::parse($list->paytill_date)->lt($now))
+																																								<span class="text-danger">{{ \Carbon\Carbon::parse($list->paytill_date)->format("d/m/Y") }}</span>
+																																								@elseif(isset($list->paytill_date))
+																																								<span>{{ \Carbon\Carbon::parse($list->paytill_date)->format("d/m/Y") }}</span>
+																																								@else
+																																								<span>{{ $list->paytill_date }}</span>
+																																								@endif
                                                                             	</td>
                                                                             	<td>
-                                                                            		<select class="form-control" name="other_hjgr_arr[]">
-	                                                                                    <option value="hj">hj</option>
-	                                                                                    <option value="gr">gr</option>
-	                                                                                </select>
+                                                                            		<select class="form-control hjgr" name="other_hjgr_arr[]">
+	                                                                                <option value="hj">合家</option>
+	                                                                                <option value="gr">个人</option>
+	                                                                              </select>
                                                                             	</td>
                                                                             	<td>
-                                                                            		<select class="form-control" name="other_display[]">
-	                                                                                    <option value="Y">Y</option>
-	                                                                                    <option value="N">N</option>
-	                                                                                </select>
+                                                                            		<select class="form-control display">
+																																									<option value="N">N</option>
+	                                                                                <option value="Y">Y</option>
+	                                                                              </select>
+																																								<input type="hidden" name="other_display[]" class="display-hidden" value="">
                                                                             	</td>
-                                                                            	<td></td>
-                                                                            	<td></td>
+                                                                            	<td>{{ $list->xyreceipt }}</td>
+                                                                            	<td>
+																																								@if(isset($list->lasttransaction_at))
+																																								<span>{{ \Carbon\Carbon::parse($list->lasttransaction_at)->format("d/m/Y") }}</span>
+																																								@else
+																																								<span>{{ $list->lasttransaction_at }}</span>
+																																								@endif
+																																							</td>
                                                                             </tr>
-																																				@endforeach
+
+																																					@endforeach
 
 																																				</tbody>
 
 																																				@else
 
-																																				<tbody id="appendDevoteeLists">
-																																						<tr id="no_data">
-																																								<td colspan="12">No Data</td>
-																																						</tr>
-																																				</tbody>
+																																				<tbody id="no_session">
+                                                                          <tr>
+	                                                                          <td colspan="12">No Result Found</td>
+	                                                                        </tr>
+                                                                        </tbody>
 
 																																				@endif
                                                                     </table>
@@ -357,8 +460,8 @@
 
 	                                                    					<div class="form-group">
 
-		                                                                        <label class="col-md-4">Transation No:</label>
-		                                                                        <div class="col-md-8"></div><!-- end col-md-8 -->
+		                                                                        <label class="col-md-3">Transation No:</label>
+		                                                                        <label class="col-md-9" id="trans_info"></label><!-- end col-md-8 -->
 
 		                                                                    </div><!-- end form-group -->
 
@@ -373,7 +476,7 @@
 		                                                                        <div class="col-md-12">
 		                                                                        	<div class="mt-radio-list">
 
-				                                                                        <div class="col-md-6">
+				                                                                        <div class="col-md-6 payment">
 				                                                                        	<label class="mt-radio mt-radio-outline"> Cash
 					                                                                            <input type="radio" name="mode_payment"
 					                                                                            	value="cash" checked>
@@ -386,7 +489,7 @@
 
 				                                                                        <div class="clearfix"></div>
 
-				                                                                        <div class="col-md-6">
+				                                                                        <div class="col-md-6 payment">
 				                                                                        	<label class="mt-radio mt-radio-outline"> Cheque
 					                                                                            <input type="radio" name="mode_payment"
 					                                                                            	value="cheque" class="form-control">
@@ -401,7 +504,7 @@
 
 				                                                                        <div class="clearfix"></div>
 
-				                                                                        <div class="col-md-6">
+				                                                                        <div class="col-md-6 payment">
 				                                                                        	<label class="mt-radio mt-radio-outline"> NETS
 					                                                                            <input type="radio" name="mode_payment"
 					                                                                            	value="nets">
@@ -410,11 +513,13 @@
 				                                                                        </div><!-- end col-md-6 -->
 
 				                                                                        <div class="col-md-6">
+																																									<input type="text" name="nets_no" value=""
+				                                                                        		class="form-control input-small" id="nets_no">
 				                                                                        </div><!-- end col-md-6 -->
 
 				                                                                        <div class="clearfix"></div>
 
-				                                                                        <div class="col-md-6">
+				                                                                        <div class="col-md-6 payment">
 				                                                                        	<label class="mt-radio mt-radio-outline"> Manual Receipt
 					                                                                            <input type="radio" name="mode_payment"
 					                                                                            	value="receipt">
@@ -430,7 +535,7 @@
 
 				                                                                        <div class="clearfix"></div>
 
-				                                                                        <div class="col-md-6">
+				                                                                        <div class="col-md-6 payment">
 				                                                                        	<label class="mt-radio mt-radio-outline">
 				                                                                        		Date of Receipts
 					                                                                        </label>
@@ -477,13 +582,13 @@
 
 		                                                                    </div><!-- end form-group -->
 
-																																				<div class="form-group">
+																																				<div class="form-group" style="display: none">
 
 						                                                           		<label class="col-md-12">Event</label>
 
 						                                                           	</div><!-- end form-group -->
 
-																																				<div class="form-group">
+																																				<div class="form-group" style="display: none">
 
 																																					<div class="col-md-12">
 
@@ -514,17 +619,17 @@
 
 	                                                    		@if(Session::has('focus_devotee'))
 	                                                    		<div class="form-group">
-	                                                    			<input type="hidden" name="focusdevotee_id"
-	                                                    				value="{{ $focus_devotee[0]->devotee_id }}">
+	                                                    			<input type="hidden" name="focusdevotee_id" value="{{ $focus_devotee[0]->devotee_id }}">
 	                                                    			<input type="hidden" name="total_amount" id="total_amount" value="">
+																														<input type="hidden" name="minimum_amount" id="minimum_amount" value="{{ $amount[0]->minimum_amount }}">
 	                                                    		</div>
 
 	                                                    		@else
 
 	                                                    		<div class="form-group">
-	                                                    			<input type="hidden" name="focusdevotee_id"
-	                                                    				value="">
+	                                                    			<input type="hidden" name="focusdevotee_id" value="">
 	                                                    			<input type="hidden" name="total_amount" id="total_amount" value="">
+																														<input type="hidden" name="minimum_amount" id="minimum_amount" value="{{ $amount[0]->minimum_amount }}">
 	                                                    		</div>
 
 	                                                    		@endif
@@ -534,10 +639,14 @@
 	                                                    			<div class="col-md-12">
 
 	                                                    				<div class="form-actions">
-	                                                                        <button type="submit" class="btn blue" id="confirm_donation_btn">Confirm
-	                                                                        </button>
-	                                                                        <button type="button" class="btn default">Cancel</button>
-	                                                                    </div><!-- end form-actions -->
+	                                                              <button type="submit" class="btn blue" id="confirm_donation_btn">Confirm
+	                                                              </button>
+	                                                              <button type="button" class="btn default">Cancel</button>
+	                                                            </div><!-- end form-actions -->
+
+																															<div id="dialog-box" title="System Alert" style="display:none;">
+																				                          Do you want to submit this form?
+																				                      </div>
 
 	                                                    			</div><!-- end col-md-12 -->
 
@@ -553,8 +662,7 @@
 
                                                                 <div class="form-group portlet-body">
 
-                                                                    <table class="table table-bordered order-column"
-                                                                        id="receipt_history_table sample_1">
+                                                                    <table class="table table-bordered order-column" id="receipt_history_table">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>XY Receipt</th>
@@ -566,7 +674,6 @@
                                                                                 <th>HJ/ GR</th>
                                                                                 <th>Amount</th>
                                                                                 <th>Manual Receipt</th>
-                                                                                <th>Print</th>
 																																								<th>View Details</th>
                                                                             </tr>
                                                                         </thead>
@@ -576,23 +683,32 @@
                                                                             @php
 
                                                                                 $receipts = Session::get('receipts');
-
                                                                             @endphp
 
                                                                             <tbody>
                                                                                 @foreach($receipts as $receipt)
+
                                                                                 <tr>
-                                                                                    <td>{{ $receipt->xy_receipt }}</td>
-                                                                                    <td>{{ \Carbon\Carbon::parse($receipt->trans_date)->format("d/m/Y") }}</td>
-                                                                                    <td>{{ $receipt->xy_receipt }}</td>
+																																									@if(isset($receipt->cancelled_date))
+                                                                                    <td class="text-danger">{{ $receipt->receipt_no }}</td>
+																																									@else
+																																										<td>{{ $receipt->receipt_no }}</td>
+																																									@endif
+                                                                                    <td>{{ \Carbon\Carbon::parse($receipt->trans_at)->format("d/m/Y") }}</td>
+                                                                                    <td>{{ $receipt->trans_no }}</td>
                                                                                     <td>{{ $receipt->description }}</td>
                                                                                     <td>{{ $receipt->chinese_name }}</td>
-                                                                                    <td>{{ $receipt->devotee_id }}</td>
-                                                                                    <td>{{ $receipt->generaldonation_hjgr }}</td>
-                                                                                    <td>{{ $receipt->amount }}</td>
+                                                                                    <td>{{ $receipt->focusdevotee_id }}</td>
+                                                                                    <td>
+																																											@if($receipt->hjgr == "hj")
+																																											合家
+																																											@else
+																																											个人
+																																											@endif
+																																										</td>
+                                                                                    <td>{{ $receipt->total_amount }}</td>
                                                                                     <td>{{ $receipt->manualreceipt }}</td>
-                                                                                    <td><a href="{{ URL::to('/staff/receipt/' . $receipt->receipt_id) }}">Print</a></td>
-																																										<td><a href="{{ URL::to('/staff/receiptdetail/' . $receipt->receipt_id) }}">Detail</a></td>
+																																										<td><a href="#tab_transactiondetail" data-toggle="tab" id="{{ $receipt->trans_no }}" class="receipt-id">Detail</a></td>
                                                                                 </tr>
                                                                                 @endforeach
                                                                             </tbody>
@@ -611,6 +727,26 @@
                                                             </div><!-- end form-body -->
 
                                                     	</div><!-- end tab-pane -->
+
+																											<div class="tab-pane" id="tab_ciji">
+																												@include('layouts.partials.tab-ciji')
+																											</div><!-- end tab-pane tab_ciji -->
+
+																											<div class="tab-pane" id="tab_yuejuan">
+																												@include('layouts.partials.tab-yuejuan')
+																											</div><!-- end tab-pane tab_ciji -->
+
+																											<div class="tab-pane" id="tab_samefamily">
+																												@include('layouts.partials.tab-xiangyou-samefamily')
+																											</div><!-- end tab-pane tab_samefamily -->
+
+																											<div class="tab-pane" id="tab_relative_friends">
+																												@include('layouts.partials.tab-xiangyou-relative-friends')
+																											</div><!-- end tab-pane tab_relative_friends -->
+
+																											<div class="tab-pane" id="tab_transactiondetail">
+																												@include('layouts.partials.tab-xiangyou-transactiondetail')
+																											</div><!-- end tab-pane tab_transactiondetail -->
 
                                                     </div><!-- end tab-content -->
 
@@ -642,35 +778,233 @@
 
 @section('custom-js')
 
-	<script src="{{asset('js/custom/common.js')}}"></script>
-	<script src="{{asset('js/custom/search-devotee.js')}}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="{{asset('js/custom/common.js')}}"></script>
+<script src="{{asset('js/custom/search-devotee.js')}}"></script>
+<script src="{{asset('js/custom/search-relative-friends.js')}}"></script>
+<script src="{{asset('js/custom/transaction-detail.js')}}"></script>
+<script src="{{asset('js/custom/ciji.js')}}"></script>
+<script src="{{asset('js/custom/yuejuan.js')}}"></script>
 
 	<script type="text/javascript">
 		$(function() {
 
-			$(".total").text(0);
+			// $(window).bind("load", function() {
+			// 	var transno = localStorage.getItem('transno');
+			// 	var data = localStorage.getItem('data');
+			//
+			// 	console.log(data);
+			// 	console.log(transno)
+			//
+			// 	if(data == 1)
+			// 	{
+			// 		$("#trans_no").val(transno);
+			// 		$("#search_detail").click();
+			//
+			// 		setTimeout(function(){
+			// 			$("#authorized_password").attr('disabled', true);
+			// 			$("#cancel-replace-btn").attr('disabled', true);
+			// 			$("#cancel-transaction").attr('disabled', true);
+			// 		}, 1000);
+			// 	}
+			//
+			//
+			// });
 
-			// Disabled Edit Devotee Tab
+			// var cancel = localStorage.getItem('cancel');
+			// console.log(cancel);
+			//
+			// if(cancel == 1)
+			// {
+			// 	$(".amount").each(function() {
+			//
+			// 		var minimum_amount = parseInt($("#minimum_amount").val());
+			// 		var amount = parseInt($(this).val());
+			//
+			// 		if(amount > minimum_amount)
+			// 		{
+			// 			$(this).closest('tr').find(".display").val('Y');
+			// 			$(this).closest('tr').find(".display-hidden").val('Y');
+			// 		}
+			// 		else
+			// 		{
+			// 			$(this).closest('tr').find(".display").val('N');
+			// 			$(this).closest('tr').find(".display-hidden").val('N');
+			// 		}
+			// 	});
+			//
+			// 	localStorage.removeItem('cancel');
+			// }
+
+			$("#trans_wrap1").hide();
+			$("#trans_wrap2").hide();
+			$("#trans_wrap3").hide();
+			$("#trans_wrap4").hide();
+			$("#trans_wrap5").hide();
+			$("#trans_wrap6").hide();
+			$("#trans_wrap7").hide();
+			$("#trans_wrap8").hide();
+
+			$(".display").attr('disabled', true);
+
+			// Disabled Edit Tab
 			$(".nav-tabs > li").click(function(){
 					if($(this).hasClass("disabled"))
 							return false;
 			});
 
-			$('body').on('focus',".paid_till", function(){
-	     		$(this).datepicker({ dateFormat: 'yy-mm-dd' });
-	    });
-
-			$('body').on('keyup',".amount-col", function(){
+			$('body').on('input', '.amount-col', function(){
 	        var sum = 0;
 
 			  $(".amount").each(function(){
-			        sum += +$(this).val();
+
+			    sum += +$(this).val();
+
+					$(".total").html(sum);
+					$("#total_amount").val(sum);
 		  	});
+	    });
 
-				$(".total").text(sum);
-				$("#total_amount").val(sum);
+			$('#update_sameaddr_btn').click(function() {
 
-	    	});
+				var count = 0;
+				var errors = new Array();
+				var validationFailed = false;
+
+				var xiangyou_focusdevotee_id = $("#xiangyou_focusdevotee_id").val();
+
+				if ($.trim(xiangyou_focusdevotee_id).length <= 0)
+		    {
+		      validationFailed = true;
+		      errors[count++] = "Please select focus devotee.";
+		    }
+
+				if (validationFailed)
+				{
+						var errorMsgs = '';
+
+						for(var i = 0; i < count; i++)
+						{
+								errorMsgs = errorMsgs + errors[i] + "<br/>";
+						}
+
+						$('html,body').animate({ scrollTop: 0 }, 'slow');
+
+						$(".validation-error").addClass("bg-danger alert alert-error")
+						$(".validation-error").html(errorMsgs);
+
+						return false;
+				}
+
+				else
+				{
+						$(".validation-error").removeClass("bg-danger alert alert-error")
+						$(".validation-error").empty();
+				}
+	    });
+
+			$("#cancel_samefamily_btn").click(function() {
+				$('.same input:checkbox').removeAttr('checked');
+			});
+
+			$("#samefamily_form").submit(function() {
+
+				var this_master = $(this);
+
+				this_master.find("input[name='xiangyou_ciji_id[]']").each( function () {
+						var checkbox_this = $(this);
+						var hidden_xiangyou_ciji_id = checkbox_this.closest('.checkbox-col').find('.hidden_xiangyou_ciji_id');
+
+						if( checkbox_this.is(":checked") == true ) {
+								hidden_xiangyou_ciji_id.attr('value','1');
+						}
+
+						else {
+								hidden_xiangyou_ciji_id.prop('checked', true);
+								//DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
+								hidden_xiangyou_ciji_id.attr('value','0');
+						}
+				});
+
+				this_master.find("input[name='yuejuan_id[]']").each( function () {
+						var checkbox_this = $(this);
+						var hidden_yuejuan_id = checkbox_this.closest('.checkbox-col').find('.hidden_yuejuan_id');
+
+						if( checkbox_this.is(":checked") == true ) {
+								hidden_yuejuan_id.attr('value','1');
+						}
+
+						else {
+								hidden_yuejuan_id.prop('checked', true);
+								//DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
+								hidden_yuejuan_id.attr('value','0');
+						}
+				});
+			});
+
+			$("#differentfamily_form").submit(function() {
+
+				var this_master = $(this);
+
+				this_master.find("input[name='xiangyou_ciji_id[]']").each( function () {
+						var checkbox_this = $(this);
+						var hidden_xiangyou_ciji_id = checkbox_this.closest('.checkbox-col').find('.hidden_xiangyou_ciji_id');
+
+						if( checkbox_this.is(":checked") == true ) {
+								hidden_xiangyou_ciji_id.attr('value','1');
+						}
+
+						else {
+								hidden_xiangyou_ciji_id.prop('checked', true);
+								//DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
+								hidden_xiangyou_ciji_id.attr('value','0');
+						}
+				});
+
+				this_master.find("input[name='yuejuan_id[]']").each( function () {
+						var checkbox_this = $(this);
+						var hidden_yuejuan_id = checkbox_this.closest('.checkbox-col').find('.hidden_yuejuan_id');
+
+						if( checkbox_this.is(":checked") == true ) {
+								hidden_yuejuan_id.attr('value','1');
+						}
+
+						else {
+								hidden_yuejuan_id.prop('checked', true);
+								//DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
+								hidden_yuejuan_id.attr('value','0');
+						}
+				});
+			});
+
+			$("body").delegate('.amount', 'focus', function() {
+
+				var minimum_amount = parseInt($("#minimum_amount").val());
+
+				$(this).on("change",function (){
+
+					var amount = parseInt($(this).val());
+
+					if(amount > minimum_amount)
+					{
+						$(this).closest('tr').find(".display").removeAttr('disabled');
+						$(this).closest('tr').find(".display").val('Y');
+						$(this).closest('tr').find(".display-hidden").val('Y');
+					}
+					else if(amount == minimum_amount)
+					{
+						$(this).closest('tr').find(".display").removeAttr('disabled');
+						$(this).closest('tr').find(".display").val('Y');
+						$(this).closest('tr').find(".display-hidden").val('Y');
+					}
+					else
+					{
+						$(this).closest('tr').find(".display").attr("disabled", "disabled");
+						$(this).closest('tr').find(".display").val('N');
+						$(this).closest('tr').find(".display-hidden").val('N');
+					}
+				});
+			});
 
  		});
 	</script>
